@@ -1,5 +1,0 @@
-TODO:
-
-
-1. username: w2, password: w2 --> this one has followers and followings pre-populated, use this one to test
-1. after getting all events (either hosted or hosting), you need to do all the sorting on front-end

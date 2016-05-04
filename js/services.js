@@ -1,8 +1,4 @@
-/**
- * Created by an5ra on 5/2/2016.
- */
 var foodentServices = angular.module('foodentServices', []);
-
 
 foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
     var ACCESS_TOKEN = 'access_token';
@@ -95,16 +91,8 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
 
 }]);
 
-foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
-    //var getUserDetail = function(queryParams){
-    //    var config = {
-    //        method: 'GET',
-    //        url: API_ENDPOINT.url + '/userprofile',
-    //        params: queryParams
-    //    };
-    //    return $http(config);
-    //};
 
+foodentServices.factory('UserService', ['$http', '$q', 'AuthService', 'API_ENDPOINT', function ($http, $q, AuthService, API_ENDPOINT) {
     var getUserDetail = function(id){
         var config = {
             method: 'GET',
@@ -112,7 +100,6 @@ foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function 
         };
         return $http(config);
     };
-
 
     var getUsers = function(queryParams){
         var config = {
@@ -123,11 +110,34 @@ foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function 
         return $http(config);
     };
 
+    var followUser = function(idToFollow) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/followuser/'+ AuthService.getCurrentUserId(),
+            data: {
+                idToFollow: idToFollow
+            }
+        };
+        return $http(config);
+    };
+
+
+    var unfollowUser = function(idToUnfollow) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/unfollowuser/'+ AuthService.getCurrentUserId(),
+            data: {
+                idToUnfollow: idToUnfollow
+            }
+        };
+        return $http(config);
+    };
 
     return {
         getUserDetail: getUserDetail,
-        //getOtherUserDetail: getOtherUserDetail,
-        getUsers: getUsers
+        getUsers: getUsers,
+        followUser: followUser,
+        unfollowUser: unfollowUser
     };
 }]);
 

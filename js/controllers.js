@@ -27,13 +27,14 @@ foodentControllers.controller('HomeController', ['$scope', function ($scope) {
     /* Add service calls below */
 }]);
 
-//NavBarController
+//NavBarController-- this adds the logout functionality to the nav-bar, call the logout function to logout, will redirect to /home after logout
 foodentControllers.controller('NavBarController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
     $scope.logout = function () {
         AuthService.logout();
         $location.path('/home');
     };
 }]);
+
 
 foodentControllers.controller('UserController', ['$scope', function ($scope) {
     $scope.name = "Anurag" //test
@@ -62,24 +63,27 @@ foodentControllers.controller('AddEventController', ['$scope', function ($scope)
 
 }]);
 
+
+//controls signup page. needs user to enter email, name, and password
 foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthService', 'DEFAULT_IMAGES', function ($scope, $location, AuthService, DEFAULT_IMAGES) {
+    // if user is already authenticated, needs to redirect him to userprofile page.
     if (AuthService.isAuthenticated()) {
         $location.path('/userprofile');
     } else {
         $scope.user = {email: '', password: '', about: ''};
 
-        //this is just for testing purpose, delete it afterwards:
+        //these are temporary data just for testing purpose, delete it afterwards:
         $scope.user.followers = ["572977452e2d88ce099ecc72", "5729764f6a309eab09b006ca", "57296ee7754b301209d92474"];
         $scope.user.following = ["57296e99754b301209d92473", "57296d42754b301209d92471", "5724358d53b0f43d13cf8d9f"];
-
         $scope.user.history = {
             attended: ['5726f64e2f6324fd123dd714', '57280db1bcd7e2fe08264314'],
             hosted: ['572812ae357f12ad0999722a', '572812786f9e099d095647a2']
         };
+        //-------------------------------------------------------------------------
 
         $scope.signup = function () {
+            // randomly assign an image url to user if not provided
             if (!$scope.user.profileImage) {
-                //DEFAULT_IMAGES.urls
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.urls.length);
                 $scope.user.profileImage = DEFAULT_IMAGES.urls[idx];
             }
@@ -113,7 +117,8 @@ foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthSe
 
 foodentControllers.controller('UserProfileController', ['$scope', '$location', '$routeParams', 'UserService', 'EventService', 'AuthService', function ($scope, $location, $routeParams, UserService, EventService, AuthService) {
     //this is used for controlling two routes: 1. users/:id and 2, userprofile.
-    //userprofile is current users profile, while users/:id returns other users profile
+    //userprofile is current users profile, while users/:id should return other users profile
+    //if :id equals to current user's id, then this route still returns the current user's detail
     if (!AuthService.isAuthenticated() || !AuthService.getCurrentUserId()) {
         $location.path('/login');
     } else {
@@ -127,25 +132,9 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
             $scope.response = response;
             console.log(response.data);
         });
-
-        //if ($routeParams.id && $routeParams.id != currentId) {
-        //    UserService.getOtherUserDetail($routeParams.id).then(function (response) {
-        //        console.log(response.data);
-        //        $scope.user = response.data.data;
-        //    }, function (response) {
-        //        $scope.response = response;
-        //        console.log(response.data);
-        //    });
-        //} else {
-        //    UserService.getUserDetail().then(function (response) {
-        //        console.log(response.data);
-        //        $scope.user = response.data.data;
-        //    }, function (response) {
-        //        $scope.response = response;
-        //        console.log(response.data);
-        //    });
-        //}
     }
+
+    // for current user, call this function on the front-end to get a list of followers
     $scope.getFollowers = function () {
         var queryParams = {
             where: {
@@ -170,6 +159,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         });
     };
 
+    // for current user, call this function on the front-end to get a list of following users
     $scope.getFollowings = function () {
         var queryParams = {
             where: {
@@ -194,6 +184,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         });
     };
 
+    // for current user, call this function on the front-end to get events currently and previous hosted
     $scope.getHostedEvents = function () {
         var queryParams = {
             where: {
@@ -209,6 +200,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         });
     };
 
+    // for current user, call this function on the front-end to get events currently and previous attended
     $scope.getAttendedEvents = function () {
         var queryParams = {
             where: {
@@ -224,22 +216,43 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         });
     };
 
-
+    // this function checks if you are visiting your own profile page
+    // if return false, then you are at other's profile page
     $scope.isMyself = function() {
         return $scope.currentId == $scope.otherId;
     };
 
 
+    // this function follows a specific user
+    // only call this function if you are on other's profile page!(you cannot follow yourself)
     $scope.followUser = function() {
         if(AuthService.isAuthenticated() && !$scope.isMyself()) {
-
+            UserService.followUser($scope.otherId).then(function(response){
+                console.log(response);
+            },function(response){
+                console.log(response);
+            });
         }
     };
-    //
-    //$scope.logout = function () {
-    //    AuthService.logout();
-    //};
 
+    // this function unfollows a specific user
+    // only call this function if you are on other's profile page!(you cannot unfollow yourself)
+    $scope.unfollowUser = function() {
+        if(AuthService.isAuthenticated() && !$scope.isMyself()) {
+            UserService.unfollowUser($scope.otherId).then(function(response){
+                console.log(response);
+            },function(response){
+                console.log(response);
+            });
+        }
+    };
+
+    $scope.isFollowing = function(){
+        if(AuthService.isAuthenticated() && !$scope.isMyself()) {
+            //return ;
+        }
+        return true;
+    }
 
 }]);
 
