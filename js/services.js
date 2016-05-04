@@ -6,6 +6,7 @@ var foodentServices = angular.module('foodentServices', []);
 
 foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
     var ACCESS_TOKEN = 'access_token';
+    var CURRENT_USER_ID = 'current_user_id';
     var isAuthenticated = false;
     var authToken;
 
@@ -23,9 +24,14 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         }
     }
 
-    function storeUserCredentials(token) {
+    function storeUserCredentials(token, user) {
         window.localStorage.setItem(ACCESS_TOKEN, token);
+        window.localStorage.setItem(CURRENT_USER_ID, user._id);
         useCredentials(token);
+    }
+
+    function getCurrentUserId() {
+        return window.localStorage.getItem(CURRENT_USER_ID);
     }
 
     var signup = function (user) {
@@ -36,7 +42,7 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         };
         return $q(function (resolve, reject) {
             $http(config).then(function (response) {
-                storeUserCredentials(response.data.token);
+                storeUserCredentials(response.data.token, response.data.data);
                 resolve(response);
             }, function (response) {
                 reject(response);
@@ -52,7 +58,7 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         };
         return $q(function (resolve, reject) {
             $http(config).then(function (response) {
-                storeUserCredentials(response.data.token);
+                storeUserCredentials(response.data.token, response.data.data);
                 resolve(response);
             }, function (response) {
                 console.log(response);
@@ -66,11 +72,12 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         isAuthenticated = false;
         $http.defaults.headers.common.Authorization = undefined;
         window.localStorage.removeItem(ACCESS_TOKEN);
-        console.log(window.localStorage);
+        window.localStorage.removeItem(CURRENT_USER_ID);
+        //console.log(window.localStorage);
     }
 
-    var logout = function () {
 
+    var logout = function () {
         destroyUserCredentials();
     };
 
@@ -82,20 +89,30 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         logout: logout,
         isAuthenticated: function () {
             return isAuthenticated;
-        }
+        },
+        getCurrentUserId: getCurrentUserId
     }
 
 }]);
 
 foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
-    var getUserDetail = function(queryParams){
+    //var getUserDetail = function(queryParams){
+    //    var config = {
+    //        method: 'GET',
+    //        url: API_ENDPOINT.url + '/userprofile',
+    //        params: queryParams
+    //    };
+    //    return $http(config);
+    //};
+
+    var getUserDetail = function(id){
         var config = {
             method: 'GET',
-            url: API_ENDPOINT.url + '/userprofile',
-            params: queryParams
+            url: API_ENDPOINT.url + '/users/'+id
         };
         return $http(config);
     };
+
 
     var getUsers = function(queryParams){
         var config = {
@@ -109,6 +126,35 @@ foodentServices.factory('UserService', ['$http', '$q', 'API_ENDPOINT', function 
 
     return {
         getUserDetail: getUserDetail,
+        //getOtherUserDetail: getOtherUserDetail,
         getUsers: getUsers
     };
 }]);
+
+
+foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
+    var getEventDetail = function(id){
+        var config = {
+            method: 'GET',
+            url: API_ENDPOINT.url + '/event/'+id
+        };
+        return $http(config);
+    };
+
+    var getEvents = function(queryParams){
+        var config = {
+            method: 'GET',
+            url: API_ENDPOINT.url + '/events',
+            params: queryParams
+        };
+        return $http(config);
+    };
+
+    return {
+        getEventDetail: getEventDetail,
+        getEvents: getEvents
+    };
+}]);
+
+
+

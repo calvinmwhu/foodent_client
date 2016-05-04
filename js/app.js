@@ -18,6 +18,9 @@ app.config(['$routeProvider', function ($routeProvider) {
     }).when('/userprofile', {
         templateUrl: './partials/userprofile.html',
         controller: 'UserProfileController'
+    }).when('/users/:id', {
+        templateUrl: './partials/userprofile.html',
+        controller: 'UserProfileController'
     }).when('/login', {
         templateUrl: './partials/login.html',
         controller: 'LoginController'

@@ -12,9 +12,29 @@
                 <img src="{{user.profileImage}}"/>
             </label>
             <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
+            <label>
+                followers: {{followers}}
+            </label>
+            <label>
+                followings: {{following}}
+            </label>
+            <label>
+                attended events: {{attendedEvents}}
+            </label>
+            <label>
+                hosted events: {{hostedEvents}}
+            </label>
         </div>
+
+        <a class="button" ng-click="getFollowers()">Get followers</a>
+        <a class="button" ng-click="getFollowings()">Get following</a>
+
+
+        <a class="button" ng-click="getHostedEvents()">Get hosted events</a>
+        <a class="button" ng-click="getAttendedEvents()">Get attended events</a>
+
+
     </div>
     <a class="button" ng-click="logout()">Log out</a>
 
-    {{response}}
 </div>
