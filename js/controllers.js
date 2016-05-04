@@ -115,23 +115,38 @@ foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthSe
 
 }]);
 
+
+//this is used for controlling two routes: 1. users/:id and 2, userprofile.
+//userprofile is current users profile, while users/:id should return other users profile
+//if :id equals to current user's id, then this route still returns the current user's detail
 foodentControllers.controller('UserProfileController', ['$scope', '$location', '$routeParams', 'UserService', 'EventService', 'AuthService', function ($scope, $location, $routeParams, UserService, EventService, AuthService) {
-    //this is used for controlling two routes: 1. users/:id and 2, userprofile.
-    //userprofile is current users profile, while users/:id should return other users profile
-    //if :id equals to current user's id, then this route still returns the current user's detail
-    if (!AuthService.isAuthenticated() || !AuthService.getCurrentUserId()) {
-        $location.path('/login');
-    } else {
-        $scope.currentId = AuthService.getCurrentUserId();
-        $scope.otherId = $routeParams.id ? $routeParams.id : $scope.currentId;
-        $scope.user = {};
-        UserService.getUserDetail($scope.otherId).then(function (response) {
+
+    // helper function to get an user, self-explanatory
+    var updateUser = function(id) {
+        //$scope.user = {};
+        UserService.getUserDetail(id).then(function (response) {
             console.log(response.data);
             $scope.user = response.data.data;
         }, function (response) {
             $scope.response = response;
             console.log(response.data);
         });
+    };
+
+    if (!AuthService.isAuthenticated() || !AuthService.getCurrentUserId()) {
+        $location.path('/login');
+    } else {
+        $scope.currentId = AuthService.getCurrentUserId();
+        $scope.otherId = $routeParams.id ? $routeParams.id : $scope.currentId;
+        updateUser($scope.otherId);
+        //$scope.user = {};
+        //UserService.getUserDetail($scope.otherId).then(function (response) {
+        //    console.log(response.data);
+        //    $scope.user = response.data.data;
+        //}, function (response) {
+        //    $scope.response = response;
+        //    console.log(response.data);
+        //});
     }
 
     // for current user, call this function on the front-end to get a list of followers
@@ -229,6 +244,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         if(AuthService.isAuthenticated() && !$scope.isMyself()) {
             UserService.followUser($scope.otherId).then(function(response){
                 console.log(response);
+                updateUser($scope.otherId);
             },function(response){
                 console.log(response);
             });
@@ -241,17 +257,19 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         if(AuthService.isAuthenticated() && !$scope.isMyself()) {
             UserService.unfollowUser($scope.otherId).then(function(response){
                 console.log(response);
+                updateUser($scope.otherId);
             },function(response){
                 console.log(response);
             });
         }
     };
 
+    // this function returns if you are currently following the user
     $scope.isFollowing = function(){
-        if(AuthService.isAuthenticated() && !$scope.isMyself()) {
-            //return ;
+        if(AuthService.isAuthenticated() && !$scope.isMyself() && $scope.user.followers) {
+            return $scope.user.followers.indexOf($scope.currentId)!=-1;
         }
-        return true;
+        return false;
     }
 
 }]);

@@ -33,8 +33,8 @@
         <a class="button" ng-click="getHostedEvents()">Get hosted events</a><br>
         <a class="button" ng-click="getAttendedEvents()">Get attended events</a><br>
 
-        <a class="button" ng-click="unfollowUser()" ng-show="!isMyself()">Unfollow</a><br>
-        <a class="button" ng-click="followUser()" ng-show="!isMyself()">follow</a><br>
+        <a class="button" ng-click="unfollowUser()" ng-show="!isMyself() && isFollowing()">Unfollow</a><br>
+        <a class="button" ng-click="followUser()" ng-show="!isMyself() && !isFollowing()">follow</a><br>
 
     </div>
     <a class="button" ng-click="logout()">Log out</a>

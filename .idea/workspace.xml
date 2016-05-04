@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb027ac9-e405-4a6b-94ca-50d162144a64" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/controllers.js" afterPath="$PROJECT_DIR$/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/services.js" afterPath="$PROJECT_DIR$/js/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/notes.txt" afterPath="$PROJECT_DIR$/notes.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/partials/userprofile.html" afterPath="$PROJECT_DIR$/partials/userprofile.html" />
     </list>
     <ignored path="foodent-client-new.iws" />
@@ -87,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="241" column="32" selection-start-line="241" selection-start-column="32" selection-end-line="241" selection-end-column="32" />
+              <caret line="126" column="27" selection-start-line="126" selection-start-column="27" selection-end-line="126" selection-end-column="27" />
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
               </folding>
@@ -99,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/partials/userprofile.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-22.5">
-              <caret line="36" column="60" selection-start-line="36" selection-start-column="60" selection-end-line="36" selection-end-column="60" />
+              <caret line="36" column="88" selection-start-line="36" selection-start-column="88" selection-end-line="36" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -108,8 +105,8 @@
       <file leaf-file-name="services.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/services.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6467391">
-              <caret line="116" column="16" selection-start-line="116" selection-start-column="16" selection-end-line="116" selection-end-column="16" />
+            <state vertical-scroll-proportion="1.3994565">
+              <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -175,9 +172,9 @@
         <option value="$PROJECT_DIR$/js/app.js" />
         <option value="$PROJECT_DIR$/partials/home.html" />
         <option value="$PROJECT_DIR$/notes.txt" />
-        <option value="$PROJECT_DIR$/js/controllers.js" />
-        <option value="$PROJECT_DIR$/partials/userprofile.html" />
         <option value="$PROJECT_DIR$/js/services.js" />
+        <option value="$PROJECT_DIR$/partials/userprofile.html" />
+        <option value="$PROJECT_DIR$/js/controllers.js" />
       </list>
     </option>
   </component>
@@ -412,7 +409,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="1920" height="1200" extended-state="6" />
+    <frame x="1440" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1263823" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -869,28 +866,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/partials/userprofile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.5">
-          <caret line="36" column="60" selection-start-line="36" selection-start-column="60" selection-end-line="36" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="241" column="32" selection-start-line="241" selection-start-column="32" selection-end-line="241" selection-end-column="32" />
+          <caret line="126" column="27" selection-start-line="126" selection-start-column="27" selection-end-line="126" selection-end-column="27" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/partials/userprofile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.5">
+          <caret line="36" column="88" selection-start-line="36" selection-start-column="88" selection-end-line="36" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6467391">
-          <caret line="116" column="16" selection-start-line="116" selection-start-column="16" selection-end-line="116" selection-end-column="16" />
+        <state vertical-scroll-proportion="1.3994565">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
           <folding />
         </state>
       </provider>
