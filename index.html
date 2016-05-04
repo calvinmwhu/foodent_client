@@ -73,11 +73,12 @@
 </div>
 
 <!-- Dropdown Structure -->
-<ul id='dropdown1' class='dropdown-content' style="margin-top:50px ">
+<!--a new controller is added here    -->
+<ul id='dropdown1' class='dropdown-content' style="margin-top:50px" ng-controller="NavBarController">
     <li><a href="#">Settings</a></li>
     <li><a href="#">About</a></li>
     <li class="divider"></li>
-    <li><a href="#">Log out</a></li>
+    <li><a href="#" ng-click="logout()">Log out</a></li>
 </ul>
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a href="#/add-event" class="btn-floating btn-large red">

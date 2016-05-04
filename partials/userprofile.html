@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="medium-6 medium-centered large-4 large-centered columns">
+        <div class="row column">
+            <h4 class="text-center">User Profile</h4>
+            <label>Name: {{user.name}}
+            </label>
+            <label>Email: {{user.email}}
+            </label>
+            <label>About: {{user.about}}
+            </label>
+            <label>
+                <img src="{{user.profileImage}}"/>
+            </label>
+            <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
+        </div>
+    </div>
+    <a class="button" ng-click="logout()">Log out</a>
+
+    {{response}}
+</div>
