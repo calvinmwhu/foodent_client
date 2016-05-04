@@ -1,0 +1,121 @@
+
+$breakpoint-tablet: 768px;
+$breakpoint-phone: 640px;
+$breakpoint-desktop: 1024px;
+$brand-font:"" ;
+
+
+/* ANIMATIONS
+============================================================================= */
+
+/* leaving animations ----------------------------------------- */
+/* rotate and fall */
+@keyframes rotateFall {
+  0%      { transform: rotateZ(0deg); }
+  20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+  40%     { transform: rotateZ(17deg); }
+  60%     { transform: rotateZ(16deg); }
+  100%    { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* slide in from the bottom */
+@keyframes slideOutLeft {
+  to      { transform: translateX(-100%); }
+}
+
+/* rotate out newspaper */
+@keyframes rotateOutNewspaper {
+  to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* entering animations --------------------------------------- */
+/* scale up */
+@keyframes scaleUp {
+  from    { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* slide in from the right */
+@keyframes slideInRight {
+  from    { transform:translateX(100%); }
+  to      { transform: translateX(0); }
+}
+
+/* slide in from the bottom */
+@keyframes slideInUp {
+  from    { transform:translateY(100%); }
+  to      { transform: translateY(0); }
+}
+/*====================================================================================*/
+.ng-enter           {animation:slideInUp 0.5s both ease-in;  }
+.ng-leave           { animation:slideOutLeft 0.5s both ease-in;  }
+
+
+
+body{
+  background-color: whitesmoke;
+}
+
+.navigation-bar{
+  background-color: white;
+
+  //height: 15vh !important;
+  //line-height: 15vh !important;
+
+  .right-nav{
+    margin-right: 20px;
+
+    .navbar-icons{
+
+      color: darkslategrey;
+      font-size: 1.5em;
+
+    }
+  }
+
+  .brand-logo{
+    color: black;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2.5em;
+    //margin-left: 20px;
+  }
+
+}
+
+// grid
+/* clear fix */
+
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+@media only screen and (max-width: 768px) {
+  .grid-sizer,
+  .grid-item {
+    width: 33.33%;
+
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .grid-sizer,
+  .grid-item {
+    width: 22%;
+
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-sizer,
+  .grid-item {
+    width: 18%;
+
+  }
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+}
