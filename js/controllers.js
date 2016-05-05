@@ -29,10 +29,30 @@ foodentControllers.controller('HomeController', ['$scope', function ($scope) {
 
 //NavBarController-- this adds the logout functionality to the nav-bar, call the logout function to logout, will redirect to /home after logout
 foodentControllers.controller('NavBarController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+    $scope.isAuthenticated = AuthService.isAuthenticated();
+    console.log($scope.isAuthenticated)
+    $scope.currentName = "n/a";
+    $scope.$watch(function () {
+        return AuthService.isAuthenticated();
+    }, function (newVal, oldVal) {
+        console.log("Changed!", newVal);
+        $scope.isAuthenticated = newVal;
+        if (newVal) {
+
+
+            $scope.currentId = AuthService.getCurrentUserId();
+            $scope.currentName = AuthService.getCurrentUserName().split(' ')[0];
+
+        }
+    }, true);
+
+}]);
+foodentControllers.controller('NavBarOptionsController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
     $scope.logout = function () {
         AuthService.logout();
         $location.path('/home');
     };
+
 }]);
 
 
@@ -57,7 +77,7 @@ foodentControllers.controller('UserController', ['$scope', function ($scope) {
 
 
 //controls signup page. needs user to enter email, name, and password
-foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthService', 'DEFAULT_IMAGES', function ($scope, $location, AuthService, DEFAULT_IMAGES) {
+foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $location, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
     // if user is already authenticated, needs to redirect him to userprofile page.
     if (AuthService.isAuthenticated()) {
         $location.path('/userprofile');
@@ -77,6 +97,10 @@ foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthS
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.urls.length);
                 $scope.user.profileImage = DEFAULT_IMAGES.urls[idx];
             }
+            if (!$scope.user.about) {
+                var randomNumber = Math.floor(Math.random() * DEFAULT_BIOS.quotes.length);
+                $scope.user.about = DEFAULT_BIOS.quotes[randomNumber];
+            }
             AuthService.signup($scope.user).then(function (response) {
                 console.log(response.data);
                 $location.path('/userprofile');
@@ -88,6 +112,18 @@ foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthS
 }]);
 
 foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+
+
+    $('#title-text').typeIt({
+        whatToType: ["With Foodent, there <strong>is</strong> such thing as a free lunch.","Foodent connects <strong>generous</strong> people with <strong>hungry</strong> people.", "Foodent is Freeganism, but <i>healthy</i>.", "Foodent like tinder, but the date's <strong>guaranteed</strong>."],
+        breakLines: false,
+        lifeLike:true,
+        loop:true,
+        typeSpeed: 100
+    }, function () {
+
+    });
+
     if (AuthService.isAuthenticated()) {
         $location.path('/userprofile');
     } else {
@@ -112,6 +148,24 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     $scope.user = {};
     // helper function to get an user, self-explanatory
+    $scope.name = "Anurag" //test
+    var $grid = $('.grid');
+
+    $grid.masonry({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        columnWidth: '.grid-sizer',
+        //isFitWidth: true,
+        gutter: 23
+    });
+
+    // layout masonry after each image loads
+    $grid.imagesLoaded().progress(function () {
+        $grid.masonry();
+
+    });
+
+
     var updateUser = function (id) {
         //$scope.user = {};
         UserService.getUserDetail(id).then(function (response) {
@@ -131,6 +185,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         updateUser($scope.otherId);
 
     }
+
 
     // for current user, call this function on the front-end to get a list of followers
     $scope.getFollowers = function () {
@@ -152,6 +207,8 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         UserService.getUsers(queryParams).then(function (response) {
             $scope.followers = response.data.data;
+            $('#followers-modal').openModal();
+            console.log($scope.followers);
         }, function (response) {
             console.log(response);
         });
@@ -177,10 +234,15 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         UserService.getUsers(queryParams).then(function (response) {
             $scope.following = response.data.data;
+            $('#following-modal').openModal();
+
+
         }, function (response) {
             console.log(response);
         });
+
     };
+
 
     // for current user, call this function on the front-end to get events currently and previous hosted
     $scope.getHostedEvents = function () {

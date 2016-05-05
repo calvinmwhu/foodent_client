@@ -3,6 +3,7 @@ var foodentServices = angular.module('foodentServices', []);
 foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
     var ACCESS_TOKEN = 'access_token';
     var CURRENT_USER_ID = 'current_user_id';
+    var CURRENT_USER_NAME = 'current_user_name';
     var isAuthenticated = false;
     var authToken;
 
@@ -23,11 +24,15 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
     function storeUserCredentials(token, user) {
         window.localStorage.setItem(ACCESS_TOKEN, token);
         window.localStorage.setItem(CURRENT_USER_ID, user._id);
+        window.localStorage.setItem(CURRENT_USER_NAME, user.name);
         useCredentials(token);
     }
 
     function getCurrentUserId() {
         return window.localStorage.getItem(CURRENT_USER_ID);
+    }
+    function getCurrentUserName() {
+        return window.localStorage.getItem(CURRENT_USER_NAME);
     }
 
     var signup = function (user) {
@@ -86,7 +91,8 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
         isAuthenticated: function () {
             return isAuthenticated;
         },
-        getCurrentUserId: getCurrentUserId
+        getCurrentUserId: getCurrentUserId,
+        getCurrentUserName: getCurrentUserName
     }
 
 }]);

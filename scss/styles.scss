@@ -46,12 +46,15 @@ $brand-font:"" ;
   to      { transform: translateY(0); }
 }
 /*====================================================================================*/
-.ng-enter           {animation:slideInUp 0.5s both ease-in;  }
-.ng-leave           { animation:slideOutLeft 0.5s both ease-in;  }
+//.ng-enter           {animation:slideInUp 0.5s both ease-in;  }
+//.ng-leave           { animation:slideOutLeft 0.5s both ease-in;  }
 
 
 
 body{
+  //background-image: url('https://i.ytimg.com/vi/Q3_fuZVyFtY/maxresdefault.jpg');
+  //background-attachment: fixed;
+  //background-position: center;
   background-color: whitesmoke;
 }
 

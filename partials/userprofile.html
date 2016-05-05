@@ -1,42 +1,312 @@
-<div class="row">
-    <div class="medium-6 medium-centered large-4 large-centered columns">
-        <div class="row column">
-            <h4 class="text-center">User Profile</h4>
-            <label>Name: {{user.name}}
-            </label>
-            <label>Email: {{user.email}}
-            </label>
-            <label>About: {{user.about}}
-            </label>
-            <label>
-                <img src="{{user.profileImage}}"/>
-            </label>
-            <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
-            <label>
-                followers: {{followers}}
-            </label><br>
-            <label>
-                followings: {{following}}
-            </label><br>
-            <label>
-                attended events: {{attendedEvents}}
-            </label><br>
-            <label>
-                hosted events: {{hostedEvents}}
-            </label>
+<div>
+    <div class="container ">
+        <div class="row user-container valign-wrapper z-depth-2">
+            <div class="col s3 center user-image-container valign-wrapper">
+                <img class="circle responsive-img user-image valign" src="{{user.profileImage}}">
+            </div>
+            <div class="col s9 user-info-container valign">
+
+                <!--Settings or Follow options-->
+
+                <a class="settings right" ><i style="color: black; font-size: 2.2em" ng-show="isMyself()" class=" fa fa-cog"></i></a>
+                <a  id="followButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="followUser()" ng-if=" !isMyself() && !isFollowing()">Follow</a>
+                <a  id="unFollowButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="unfollowUser()" ng-show="isFollowing()">unfollow</a>
+
+                <div class=" row left-align user-name-container">
+                    <p class="user-name">
+                        {{user.name}}
+                    </p>
+                </div>
+
+                <div class=" row user-about-container left-align">
+                    <p class="user-about">
+                        {{user.about}}
+                    </p>
+                </div>
+
+                <div class="row user-stats-container">
+                    <div class=" col s4" style="padding: 0;">
+                        <p class="user-foodents ">{{foodentCount}} foodents</p>
+                    </div>
+                    <div class="  col s4" style="padding:0;">
+                        <a ng-click="getFollowers()"><p class="user-followers">{{user.followers.length}} followers</p></a>
+                    </div>
+                    <div class=" col s4" style="padding: 0">
+                        <a ng-click="getFollowings()"><p class="user-following">{{user.following.length}} following</p></a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <a class="button" ng-click="getFollowers()">Get followers</a><br>
-        <a class="button" ng-click="getFollowings()">Get following</a><br><br>
+    </div>
 
 
-        <a class="button" ng-click="getHostedEvents()">Get hosted events</a><br>
-        <a class="button" ng-click="getAttendedEvents()">Get attended events</a><br>
+    <!-- Modal Structure -->
+    <div id="followers-modal" class="modal" style="width:300px">
+        <div class="modal-content center">
 
-        <a class="button" ng-click="unfollowUser()" ng-show="!isMyself() && isFollowing()">Unfollow</a><br>
-        <a class="button" ng-click="followUser()" ng-show="!isMyself() && !isFollowing()">follow</a><br>
+            <div ng-repeat="follower in followers">
+                <a ng-href="#/users/{{follower._id}}"><div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
+                    <img src="{{follower.profileImage}}" alt="Contact Person">
+                    {{follower.name}}
+
+                </div></a>
+                <hr>
+            </div>
+        </div>
 
     </div>
-    <a class="button" ng-click="logout()">Log out</a>
 
+    <!-- Modal Structure -->
+    <div id="following-modal" class="modal" style="width:300px">
+        <div class="modal-content center">
+
+            <div ng-repeat="follower in following">
+                <a ng-href="#/users/{{follower._id}}"><div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
+                    <img src="{{follower.profileImage}}" alt="Contact Person">
+                    {{follower.name}}
+
+                </div></a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="grid" style="margin: 1%; margin-left: 4%; margin-top: 40px">
+        <div class="grid-sizer"></div>
+
+        <div class="grid-item">
+            <div class="card hoverable" style="z-index: 99">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://static.comicvine.com/uploads/original/11114/111144184/4791207-9790062099-Pizza.jpg">
+                    <span style="background: linear-gradient(transparent,black);width: 100%" class="card-title activator white-text truncate">Pizza<span class="right">3.2 mi</span> </span>
+                </div>
+                <div class="card-content activator">
+                    <p class="center-align" style="color: darkred">Ends in 30 minutes.</p><br>
+                    <div class="chip" style="background-color: cadetblue; color: white">
+                        <img src="https://static.pexels.com/photos/6413/people-eyes-playing-young.jpg" alt="Contact Person">
+                        Jane Doe
+                    </div>
+                    <div class="chip" style="margin-top: 4px">
+                        Hot when ready
+                    </div>
+
+                    <div class="chip" style="margin-top: 4px">
+                        Italian
+                    </div>
+                    <div class="chip" style="margin-top: 4px">
+                        3 guests
+                    </div>
+
+                </div>
+
+                <!--<div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>-->
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4 flow-text">pizza<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="card hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4 truncate">Blahskghbfgkjfgkdfjg Title</span>
+
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="grid-item">
+            <div class="card hoverable" style="z-index: 99">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="card hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+
+        </div><div class="grid-item">
+        <div class="card hoverable" style="z-index: 99">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator"
+                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+            </div>
+            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
+                        class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+        </div>
+    </div>
+        <div class="grid-item">
+            <div class="card hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+
+        </div><div class="grid-item">
+        <div class="card hoverable" style="z-index: 99">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator"
+                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+            </div>
+            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
+                        class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+        </div>
+    </div>
+        <div class="grid-item">
+            <div class="card hoverable">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
+
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i
+                        class="material-icons right">close</i></span>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </div>
+<!--<div class="row">-->
+<!--<div class="medium-6 medium-centered large-4 large-centered columns">-->
+<!--<div class="row column">-->
+<!--<h4 class="text-center">User Profile</h4>-->
+<!--<label>Name: {{user.name}}-->
+<!--</label>-->
+<!--<label>Email: {{user.email}}-->
+<!--</label>-->
+<!--<label>About: {{user.about}}-->
+<!--</label>-->
+<!--<label>-->
+<!--<img src="{{user.profileImage}}"/>-->
+<!--</label>-->
+<!--&lt;!&ndash;<input id="show-password" type="checkbox"><label for="show-password">Show password</label>&ndash;&gt;-->
+<!--<label>-->
+<!--followers: {{followers}}-->
+<!--</label><br>-->
+<!--<label>-->
+<!--followings: {{following}}-->
+<!--</label><br>-->
+<!--<label>-->
+<!--attended events: {{attendedEvents}}-->
+<!--</label><br>-->
+<!--<label>-->
+<!--hosted events: {{hostedEvents}}-->
+<!--</label>-->
+<!--</div>-->
+
+<!--<a class="button" ng-click="getFollowers()">Get followers</a><br>-->
+<!--<a class="button" ng-click="getFollowings()">Get following</a><br><br>-->
+
+
+<!--<a class="button" ng-click="getHostedEvents()">Get hosted events</a><br>-->
+<!--<a class="button" ng-click="getAttendedEvents()">Get attended events</a><br>-->
+
+<!--<a class="button" ng-click="unfollowUser()" ng-show="!isMyself() && isFollowing()">Unfollow</a><br>-->
+<!--<a class="button" ng-click="followUser()" ng-show="!isMyself() && !isFollowing()">follow</a><br>-->
+
+<!--</div>-->
+<!--<a class="button" ng-click="logout()">Log out</a>-->
+
+<!--</div>-->
