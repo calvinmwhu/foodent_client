@@ -33,7 +33,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 app.constant('AUTH_EVENTS', {
     notAuthenticated: 'auth-not-authenticated'
 }).constant('API_ENDPOINT', {
-    url: 'http://127.0.0.1:4000/api'
+    url: 'http://198.199.102.246:4000/api'
     //  For a simulator use: url: 'http://127.0.0.1:8080/api'
 }).constant('DEFAULT_IMAGES', {
     urls: [

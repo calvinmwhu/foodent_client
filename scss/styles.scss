@@ -46,12 +46,14 @@ $brand-font:"" ;
   to      { transform: translateY(0); }
 }
 /*====================================================================================*/
-.ng-enter           {animation:slideInUp 0.5s both ease-in;  }
-.ng-leave           { animation:slideOutLeft 0.5s both ease-in;  }
+//.ng-enter           {animation:slideInUp 0.5s both ease-in;  }
+//.ng-leave           { animation:slideOutLeft 0.5s both ease-in;  }
 
 
 
 body{
+  //background-image: url('https://ps-noerr.ebspaysuite.com/ebshire/assets/images/7.jpg');
+  //background-attachment: fixed;
   background-color: whitesmoke;
 }
 

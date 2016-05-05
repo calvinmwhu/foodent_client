@@ -6,10 +6,12 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/add-event-styles.css">
+    <link rel="stylesheet" href="./css/user-styles.css">
 
 
     <!--Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Quicksand|Asap|Tangerine' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
 
     <!-- Angular Scripts -->
     <!-- NOTE: removing the ".min." can help debugging in the console-->
@@ -63,7 +65,7 @@
             <ul class="right valign-wrapper right-nav ">
 
 
-                <li><a class="valign navbar-icons" href="#/user"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                <li><a class="valign navbar-icons" href="#/userprofile"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                 <li><a class="valign navbar-icons dropdown-button" data-activates='dropdown1'><i
                         class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
                 </li>
@@ -80,7 +82,7 @@
     <li class="divider"></li>
     <li><a href="#" ng-click="logout()">Log out</a></li>
 </ul>
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<div class="fixed-action-btn tooltipped" data-position="left" data-delay="50" data-tooltip="Create an Event" style="bottom: 45px; right: 24px;">
     <a href="#/add-event" class="btn-floating btn-large red">
         <i class="fa fa-pencil" aria-hidden="false"></i>
     </a>

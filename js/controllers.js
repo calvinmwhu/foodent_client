@@ -73,12 +73,12 @@ foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthS
         $scope.user = {email: '', password: '', about: ''};
 
         //these are temporary data just for testing purpose, delete it afterwards:
-        $scope.user.followers = ["572977452e2d88ce099ecc72", "5729764f6a309eab09b006ca", "57296ee7754b301209d92474"];
-        $scope.user.following = ["57296e99754b301209d92473", "57296d42754b301209d92471", "5724358d53b0f43d13cf8d9f"];
-        $scope.user.history = {
-            attended: ['5726f64e2f6324fd123dd714', '57280db1bcd7e2fe08264314'],
-            hosted: ['572812ae357f12ad0999722a', '572812786f9e099d095647a2']
-        };
+        //$scope.user.followers = ["572977452e2d88ce099ecc72", "5729764f6a309eab09b006ca", "57296ee7754b301209d92474"];
+        //$scope.user.following = ["57296e99754b301209d92473", "57296d42754b301209d92471", "5724358d53b0f43d13cf8d9f"];
+        //$scope.user.history = {
+        //    attended: ['5726f64e2f6324fd123dd714', '57280db1bcd7e2fe08264314'],
+        //    hosted: ['572812ae357f12ad0999722a', '572812786f9e099d095647a2']
+        //};
         //-------------------------------------------------------------------------
 
         $scope.signup = function () {
@@ -123,6 +123,26 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     $scope.user = {};
     // helper function to get an user, self-explanatory
+    $scope.name = "Anurag" //test
+    var $grid = $('.grid');
+
+    $grid.masonry({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        columnWidth: '.grid-sizer',
+        //isFitWidth: true,
+        gutter: 23
+    });
+
+    // layout masonry after each image loads
+    $grid.imagesLoaded().progress(function () {
+        $grid.masonry();
+
+    });
+
+
+
+
     var updateUser = function(id) {
         //$scope.user = {};
         UserService.getUserDetail(id).then(function (response) {
@@ -142,6 +162,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         updateUser($scope.otherId);
 
     }
+
 
     // for current user, call this function on the front-end to get a list of followers
     $scope.getFollowers = function () {
@@ -163,6 +184,8 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         UserService.getUsers(queryParams).then(function (response) {
             $scope.followers = response.data.data;
+            $('#followers-modal').openModal();
+            console.log($scope.followers);
         }, function (response) {
             console.log(response);
         });
@@ -188,10 +211,15 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         UserService.getUsers(queryParams).then(function (response) {
             $scope.following = response.data.data;
+            $('#following-modal').openModal();
+
+
         }, function (response) {
             console.log(response);
         });
+
     };
+
 
     // for current user, call this function on the front-end to get events currently and previous hosted
     $scope.getHostedEvents = function () {
