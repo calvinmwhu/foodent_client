@@ -139,14 +139,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         $scope.currentId = AuthService.getCurrentUserId();
         $scope.otherId = $routeParams.id ? $routeParams.id : $scope.currentId;
         updateUser($scope.otherId);
-        //$scope.user = {};
-        //UserService.getUserDetail($scope.otherId).then(function (response) {
-        //    console.log(response.data);
-        //    $scope.user = response.data.data;
-        //}, function (response) {
-        //    $scope.response = response;
-        //    console.log(response.data);
-        //});
+        
     }
 
     // for current user, call this function on the front-end to get a list of followers
