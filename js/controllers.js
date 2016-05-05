@@ -121,6 +121,7 @@ foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthSe
 //if :id equals to current user's id, then this route still returns the current user's detail
 foodentControllers.controller('UserProfileController', ['$scope', '$location', '$routeParams', 'UserService', 'EventService', 'AuthService', function ($scope, $location, $routeParams, UserService, EventService, AuthService) {
 
+    $scope.user = {};
     // helper function to get an user, self-explanatory
     var updateUser = function(id) {
         //$scope.user = {};
@@ -139,7 +140,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         $scope.currentId = AuthService.getCurrentUserId();
         $scope.otherId = $routeParams.id ? $routeParams.id : $scope.currentId;
         updateUser($scope.otherId);
-        
+
     }
 
     // for current user, call this function on the front-end to get a list of followers
@@ -259,7 +260,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     // this function returns if you are currently following the user
     $scope.isFollowing = function(){
-        if(AuthService.isAuthenticated() && !$scope.isMyself() && $scope.user.followers) {
+        if(AuthService.isAuthenticated() && !$scope.isMyself() && $scope.user.followers != undefined) {
             return $scope.user.followers.indexOf($scope.currentId)!=-1;
         }
         return false;
