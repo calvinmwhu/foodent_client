@@ -93,15 +93,15 @@ foodentServices.factory('AuthService', ['$http', '$q', 'API_ENDPOINT', function 
 
 
 foodentServices.factory('UserService', ['$http', '$q', 'AuthService', 'API_ENDPOINT', function ($http, $q, AuthService, API_ENDPOINT) {
-    var getUserDetail = function(id){
+    var getUserDetail = function (id) {
         var config = {
             method: 'GET',
-            url: API_ENDPOINT.url + '/users/'+id
+            url: API_ENDPOINT.url + '/users/' + id
         };
         return $http(config);
     };
 
-    var getUsers = function(queryParams){
+    var getUsers = function (queryParams) {
         var config = {
             method: 'GET',
             url: API_ENDPOINT.url + '/users',
@@ -110,10 +110,10 @@ foodentServices.factory('UserService', ['$http', '$q', 'AuthService', 'API_ENDPO
         return $http(config);
     };
 
-    var followUser = function(idToFollow) {
+    var followUser = function (idToFollow) {
         var config = {
             method: 'PUT',
-            url: API_ENDPOINT.url + '/followuser/'+ AuthService.getCurrentUserId(),
+            url: API_ENDPOINT.url + '/followuser/' + AuthService.getCurrentUserId(),
             data: {
                 idToFollow: idToFollow
             }
@@ -122,10 +122,10 @@ foodentServices.factory('UserService', ['$http', '$q', 'AuthService', 'API_ENDPO
     };
 
 
-    var unfollowUser = function(idToUnfollow) {
+    var unfollowUser = function (idToUnfollow) {
         var config = {
             method: 'PUT',
-            url: API_ENDPOINT.url + '/unfollowuser/'+ AuthService.getCurrentUserId(),
+            url: API_ENDPOINT.url + '/unfollowuser/' + AuthService.getCurrentUserId(),
             data: {
                 idToUnfollow: idToUnfollow
             }
@@ -142,16 +142,16 @@ foodentServices.factory('UserService', ['$http', '$q', 'AuthService', 'API_ENDPO
 }]);
 
 
-foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', function ($http, $q, API_ENDPOINT) {
-    var getEventDetail = function(id){
+foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', 'AuthService', function ($http, $q, API_ENDPOINT, AuthService) {
+    var getEventDetail = function (id) {
         var config = {
             method: 'GET',
-            url: API_ENDPOINT.url + '/event/'+id
+            url: API_ENDPOINT.url + '/events/' + id
         };
         return $http(config);
     };
 
-    var getEvents = function(queryParams){
+    var getEvents = function (queryParams) {
         var config = {
             method: 'GET',
             url: API_ENDPOINT.url + '/events',
@@ -160,9 +160,103 @@ foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', function
         return $http(config);
     };
 
+    var addEvent = function (data) {
+        var config = {
+            method: 'POST',
+            url: API_ENDPOINT.url + '/events',
+            data: data
+        };
+        return $http(config);
+    };
+
+    var deleteEvent = function (id) {
+        var config = {
+            method: 'DELETE',
+            url: API_ENDPOINT.url + '/events/' + id
+        };
+        return $http(config);
+    };
+
+
+    var addUserToGuestList = function (eventId, userId) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/events/' + eventId +'/adduser',
+            data: {
+                userId: userId
+            }
+        };
+        return $http(config);
+    };
+
+    var removeUserFromGuestList = function (eventId, userId) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/events/' + eventId +'/removeuser',
+            data: {
+                userId: userId
+            }
+        };
+        return $http(config);
+    };
+
     return {
         getEventDetail: getEventDetail,
-        getEvents: getEvents
+        getEvents: getEvents,
+        addEvent: addEvent,
+        deleteEvent: deleteEvent,
+        addUserToGuestList: addUserToGuestList,
+        removeUserFromGuestList: removeUserFromGuestList
+    };
+}]);
+
+
+foodentServices.factory('InviteService', ['$http', '$q', 'API_ENDPOINT', 'AuthService', function ($http, $q, API_ENDPOINT, AuthService) {
+    var getInviteDetail = function(id) {
+        var config = {
+            method: 'GET',
+            url: API_ENDPOINT.url + '/invites/' + id
+        };
+        return $http(config);
+    };
+
+
+    var getInvites = function (queryParams) {
+        var config = {
+            method: 'GET',
+            url: API_ENDPOINT.url + '/invites',
+            params: queryParams
+        };
+        return $http(config);
+    };
+
+    var addUserToRequest = function(inviteId, userId) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/invites/' + inviteId + '/adduser',
+            data: {
+                userId: userId
+            }
+        };
+        return $http(config);
+    };
+
+    var removeUserFromRequest = function(inviteId, userId) {
+        var config = {
+            method: 'PUT',
+            url: API_ENDPOINT.url + '/invites/' + inviteId + '/removeuser',
+            data: {
+                userId: userId
+            }
+        };
+        return $http(config);
+    };
+
+    return {
+        getInviteDetail: getInviteDetail,
+        getInvites: getInvites,
+        addUserToRequest: addUserToRequest,
+        removeUserFromRequest: removeUserFromRequest
     };
 }]);
 
