@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="medium-6 medium-centered large-4 large-centered columns">
+        <div class="row column">
+            <h4 class="text-center">User Profile</h4>
+            <label>Name: {{user.name}}
+            </label>
+            <label>Email: {{user.email}}
+            </label>
+            <label>About: {{user.about}}
+            </label>
+            <label>
+                <img src="{{user.profileImage}}"/>
+            </label>
+            <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
+            <label>
+                followers: {{followers}}
+            </label><br>
+            <label>
+                followings: {{following}}
+            </label><br>
+            <label>
+                attended events: {{attendedEvents}}
+            </label><br>
+            <label>
+                hosted events: {{hostedEvents}}
+            </label>
+        </div>
+
+        <a class="button" ng-click="getFollowers()">Get followers</a><br>
+        <a class="button" ng-click="getFollowings()">Get following</a><br><br>
+
+
+        <a class="button" ng-click="getHostedEvents()">Get hosted events</a><br>
+        <a class="button" ng-click="getAttendedEvents()">Get attended events</a><br>
+
+        <a class="button" ng-click="unfollowUser()" ng-show="!isMyself() && isFollowing()">Unfollow</a><br>
+        <a class="button" ng-click="followUser()" ng-show="!isMyself() && !isFollowing()">follow</a><br>
+
+    </div>
+    <a class="button" ng-click="logout()">Log out</a>
+
+</div>
