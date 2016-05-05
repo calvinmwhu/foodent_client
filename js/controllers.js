@@ -29,10 +29,30 @@ foodentControllers.controller('HomeController', ['$scope', function ($scope) {
 
 //NavBarController-- this adds the logout functionality to the nav-bar, call the logout function to logout, will redirect to /home after logout
 foodentControllers.controller('NavBarController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+    $scope.isAuthenticated = AuthService.isAuthenticated();
+    console.log($scope.isAuthenticated)
+    $scope.currentName = "n/a";
+    $scope.$watch(function () {
+        return AuthService.isAuthenticated();
+    }, function (newVal, oldVal) {
+        console.log("Changed!", newVal);
+        $scope.isAuthenticated = newVal;
+        if (newVal) {
+
+
+            $scope.currentId = AuthService.getCurrentUserId();
+            $scope.currentName = AuthService.getCurrentUserName().split(' ')[0];
+
+        }
+    }, true);
+
+}]);
+foodentControllers.controller('NavBarOptionsController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
     $scope.logout = function () {
         AuthService.logout();
         $location.path('/home');
     };
+
 }]);
 
 
@@ -65,7 +85,7 @@ foodentControllers.controller('AddEventController', ['$scope', function ($scope)
 
 
 //controls signup page. needs user to enter email, name, and password
-foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthService', 'DEFAULT_IMAGES', function ($scope, $location, AuthService, DEFAULT_IMAGES) {
+foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $location, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
     // if user is already authenticated, needs to redirect him to userprofile page.
     if (AuthService.isAuthenticated()) {
         $location.path('/userprofile');
@@ -87,6 +107,10 @@ foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthS
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.urls.length);
                 $scope.user.profileImage = DEFAULT_IMAGES.urls[idx];
             }
+            if (!$scope.user.about) {
+                var randomNumber = Math.floor(Math.random() * DEFAULT_BIOS.quotes.length);
+                $scope.user.about = DEFAULT_BIOS.quotes[randomNumber];
+            }
             AuthService.signup($scope.user).then(function (response) {
                 console.log(response.data);
                 $location.path('/userprofile');
@@ -98,6 +122,18 @@ foodentControllers.controller('SignUpController', ['$scope', '$location', 'AuthS
 }]);
 
 foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
+
+
+    $('#title-text').typeIt({
+        whatToType: ["With Foodent, there <strong>is</strong> such thing as a free lunch.","Foodent connects <strong>generous</strong> people with <strong>hungry</strong> people.", "Foodent is Freeganism, but <i>healthy</i>.", "Foodent like tinder, but the date's <strong>guaranteed</strong>."],
+        breakLines: false,
+        lifeLike:true,
+        loop:true,
+        typeSpeed: 100
+    }, function () {
+
+    });
+
     if (AuthService.isAuthenticated()) {
         $location.path('/userprofile');
     } else {
@@ -141,9 +177,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
     });
 
 
-
-
-    var updateUser = function(id) {
+    var updateUser = function (id) {
         //$scope.user = {};
         UserService.getUserDetail(id).then(function (response) {
             console.log(response.data);
@@ -255,19 +289,19 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     // this function checks if you are visiting your own profile page
     // if return false, then you are at other's profile page
-    $scope.isMyself = function() {
+    $scope.isMyself = function () {
         return $scope.currentId == $scope.otherId;
     };
 
 
     // this function follows a specific user
     // only call this function if you are on other's profile page!(you cannot follow yourself)
-    $scope.followUser = function() {
-        if(AuthService.isAuthenticated() && !$scope.isMyself()) {
-            UserService.followUser($scope.otherId).then(function(response){
+    $scope.followUser = function () {
+        if (AuthService.isAuthenticated() && !$scope.isMyself()) {
+            UserService.followUser($scope.otherId).then(function (response) {
                 console.log(response);
                 updateUser($scope.otherId);
-            },function(response){
+            }, function (response) {
                 console.log(response);
             });
         }
@@ -275,21 +309,21 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     // this function unfollows a specific user
     // only call this function if you are on other's profile page!(you cannot unfollow yourself)
-    $scope.unfollowUser = function() {
-        if(AuthService.isAuthenticated() && !$scope.isMyself()) {
-            UserService.unfollowUser($scope.otherId).then(function(response){
+    $scope.unfollowUser = function () {
+        if (AuthService.isAuthenticated() && !$scope.isMyself()) {
+            UserService.unfollowUser($scope.otherId).then(function (response) {
                 console.log(response);
                 updateUser($scope.otherId);
-            },function(response){
+            }, function (response) {
                 console.log(response);
             });
         }
     };
 
     // this function returns if you are currently following the user
-    $scope.isFollowing = function(){
-        if(AuthService.isAuthenticated() && !$scope.isMyself() && $scope.user.followers != undefined) {
-            return $scope.user.followers.indexOf($scope.currentId)!=-1;
+    $scope.isFollowing = function () {
+        if (AuthService.isAuthenticated() && !$scope.isMyself() && $scope.user.followers != undefined) {
+            return $scope.user.followers.indexOf($scope.currentId) != -1;
         }
         return false;
     }
