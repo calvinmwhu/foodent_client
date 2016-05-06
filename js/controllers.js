@@ -439,7 +439,7 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
 }]);
 
-foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',function ($scope,$mdpTimePicker) {
+foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker', function ($scope, $mdpTimePicker) {
 
     $scope.eventDate = new Date();
     $scope.month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
