@@ -36,4 +36,10 @@
       .user-container .user-stats-container .user-stats-label .user-stats-figure {
         font-weight: 600; }
 
+.login-container .title-main {
+  margin-top: 45px;
+  color: forestgreen;
+  font-size: 35px;
+  font-family: 'Raleway', sans-serif; }
+
 /*# sourceMappingURL=user-styles.css.map */
