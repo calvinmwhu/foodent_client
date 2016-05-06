@@ -330,11 +330,33 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
             //console.log(response.data);
             $scope.event = response.data.data;
             $scope.invite = $scope.event.invite;
+            getHostInfo($scope.event.host);
+            //$scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
+            console.log($scope.event);
+            $scope.map = {center: {latitude: $scope.event.longitude, longitude: $scope.event.latitude}, zoom: 15};
+            $scope.marker = {
+                id: "0",
+                coords: {
+                    latitude: $scope.event.longitude,
+                    longitude: $scope.event.latitude
+                }
+            }
+
         }, function (response) {
             $scope.response = response;
             console.log(response.data);
         });
     };
+
+    var getHostInfo = function (hostId) {
+        UserService.getUserDetail(hostId).then(function (response) {
+            //console.log(response.data);
+            $scope.host = response.data.data;
+        }, function (response) {
+            console.log(response.data);
+        });
+    };
+
 
     //event status
     $scope.isHostForEvent = function () {
@@ -347,7 +369,7 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
     //invite status
     $scope.inviteStarted = function () {
-        return $scope.invite!=undefined && $scope.invite;
+        return $scope.invite != undefined && $scope.invite;
     };
 
     var inviteEnded = function () {
@@ -552,7 +574,7 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
 }]);
 
-foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
+foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
     $scope.event = {};
     if (!AuthService.isAuthenticated()) {
         $location.path('/login');

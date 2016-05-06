@@ -1,3 +1,27 @@
+<div class="container">
+    <div class="event-container z-depth-2">
+        <div class="event-header">
+            <div class="row" style="background-color: #0a0a0a; margin: 0">
+                <div class="col s4 host-box">
+                    iuhdfgjn
+                </div>
+                <div class="col s4 title-box">
+                    iuhdfgjnsdfd
+                </div>
+
+                <div class="col s4 map-box">
+                    <ui-gmap-google-map class='map' center='map.center' zoom='map.zoom'>
+                        <ui-gmap-marker coords="marker.coords" idkey="0">
+                        </ui-gmap-marker>
+                    </ui-gmap-google-map>
+                    {{map}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div>
     <p>
         Event page!
@@ -9,53 +33,54 @@
 
     <h2>RequestStatus {{userRequestStatus}}</h2>
 
-    <div> <h3>Event:</h3><br>
+    <div><h3>Event:</h3><br>
         {{event}}
-    </div><br>
-
-    <div> <h3>Invite:</h3><br>
-        {{invite}}
-        <div ng-show="isHostForEvent() && !inviteStarted()"">
-           start time <input type="text" ng-model="inviteStartTime"></input><br>
-           end time <input type="text" ng-model="inviteEndTime"></input><br>
-            type <input type="text" ng-model="inviteType"></input><br>
-
-         <a ng-click="startInvite()">Create new invite
-
     </div>
+    <br>
+
+    <div><h3>Invite:</h3><br>
+        {{invite}}
+        <div ng-show="isHostForEvent() && !inviteStarted()"
+        ">
+        start time <input type="text" ng-model="inviteStartTime"></input><br>
+        end time <input type="text" ng-model="inviteEndTime"></input><br>
+        type <input type="text" ng-model="inviteType"></input><br>
+
+        <a ng-click="startInvite()">Create new invite
+
 
         </a>
-        <a ng-show="!isHostForEvent() && inviteStarted() && !isOpenInvite()"  ng-click="requestInvite(currentUserId)">Request invite</a>
-        <a ng-show="!isHostForEvent() && inviteStarted() && isOpenInvite()"  ng-click="requestToJoinEvent(currentUserId)">Join Event</a>
-    </div><br>
+        <a ng-show="!isHostForEvent() && inviteStarted() && !isOpenInvite()" ng-click="requestInvite(currentUserId)">Request
+            invite</a>
+        <a ng-show="!isHostForEvent() && inviteStarted() && isOpenInvite()"
+           ng-click="requestToJoinEvent(currentUserId)">Join Event</a>
+    </div>
+    <br>
 
-    <div> <h3>guest list(accepted users):</h3><br>
+    <div><h3>guest list(accepted users):</h3><br>
         {{eventGuestList}}
-    </div><br>
+    </div>
+    <br>
 
 
-
-    <div> <h3>User pending(user with pending request):</h3><br>
+    <div><h3>User pending(user with pending request):</h3><br>
         <div ng-repeat="user in pendingUsers">
             <a href="#/users/{{user._id}}">{{user}}</a> <br><br>
-            <a ng-show="isHostForEvent()"  ng-click="acceptUserRequest(user._id)">ACCEPT</a>
+            <a ng-show="isHostForEvent()" ng-click="acceptUserRequest(user._id)">ACCEPT</a>
             <a ng-show="isHostForEvent()" ng-click="denyUserRequest(user._id)">DENY</a>
             <a ng-show="isHostForEvent()" ng-click="pendUserRequest(user._id)">PEND</a>
             <br><br>
         </div>
-    </div><br>
-
-
+    </div>
+    <br>
 
 
     <!--<a class="button" ng-click="cancelEvent()" ng-show="isHostForEvent()">Cancel Event</a><br>-->
 
 
-
     <!--<p>{{event.guests}}</p><br><br>-->
 
     <!--<p>{{invite.request}}</p><br><br>-->
-
 
 
 </div>

@@ -7,10 +7,14 @@
             <div class="col s9 user-info-container valign">
 
                 <!--Settings or Follow options-->
-<a id="edit-profile-button" ng-show="isMyself()" class="btn-floating btn-small waves-effect waves-light red right"><i class="material-icons">settings</i></a>
-<!--                <a class="settings right" ><i style="color: black; font-size: 2.2em" ng-show="isMyself()" class=" fa fa-cog"></i></a>-->
-                <a  id="followButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="followUser()" ng-if=" !isMyself() && !isFollowing()">Follow</a>
-                <a  id="unFollowButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="unfollowUser()" ng-show="isFollowing()">unfollow</a>
+                <a id="edit-profile-button" ng-show="isMyself()"
+                   class="btn-floating btn-small waves-effect waves-light red right"><i
+                        class="material-icons">settings</i></a>
+                <!--                <a class="settings right" ><i style="color: black; font-size: 2.2em" ng-show="isMyself()" class=" fa fa-cog"></i></a>-->
+                <a id="followButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;"
+                   ng-click="followUser()" ng-if=" !isMyself() && !isFollowing()">Follow</a>
+                <a id="unFollowButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;"
+                   ng-click="unfollowUser()" ng-show="isFollowing()">unfollow</a>
 
                 <div class=" row left-align user-name-container">
                     <p class="user-name">
@@ -29,10 +33,12 @@
                         <p class="user-stats-label"><span class="user-stats-figure">{{foodentCount}}</span> foodents</p>
                     </div>
                     <div class="  col s4" style="padding:0;">
-                        <a ng-click="getFollowers()"><p class="user-stats-label"><span class="user-stats-figure">{{user.followers.length}} </span>followers</p></a>
+                        <a ng-click="getFollowers()"><p class="user-stats-label"><span class="user-stats-figure">{{user.followers.length}} </span>followers
+                        </p></a>
                     </div>
                     <div class=" col s4" style="padding: 0">
-                        <a ng-click="getFollowings()"><p class="user-stats-label"><span class="user-stats-figure">{{user.following.length}}</span> following</p></a>
+                        <a ng-click="getFollowings()"><p class="user-stats-label"><span class="user-stats-figure">{{user.following.length}}</span>
+                            following</p></a>
                     </div>
                 </div>
             </div>
@@ -46,11 +52,13 @@
         <div class="modal-content center">
 
             <div ng-repeat="follower in followers">
-                <a ng-href="#/users/{{follower._id}}"><div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
-                    <img src="{{follower.profileImage}}" alt="Contact Person">
-                    {{follower.name}}
+                <a ng-href="#/users/{{follower._id}}">
+                    <div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
+                        <img src="{{follower.profileImage}}" alt="Contact Person">
+                        {{follower.name}}
 
-                </div></a>
+                    </div>
+                </a>
                 <hr>
             </div>
         </div>
@@ -62,35 +70,17 @@
         <div class="modal-content center">
 
             <div ng-repeat="follower in following">
-                <a ng-href="#/users/{{follower._id}}"><div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
-                    <img src="{{follower.profileImage}}" alt="Contact Person">
-                    {{follower.name}}
+                <a ng-href="#/users/{{follower._id}}">
+                    <div class="chip" style="background-color: cadetblue; margin: 20px; color: white">
+                        <img src="{{follower.profileImage}}" alt="Contact Person">
+                        {{follower.name}}
 
-                </div></a>
+                    </div>
+                </a>
             </div>
         </div>
 
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <div class="grid" style="margin: 1%; margin-left: 4%; margin-top: 40px">
@@ -101,12 +91,15 @@
                 <div class="card-image waves-effect waves-block waves-light">
                     <img class="activator"
                          src="http://static.comicvine.com/uploads/original/11114/111144184/4791207-9790062099-Pizza.jpg">
-                    <span style="background: linear-gradient(transparent,black);width: 100%" class="card-title activator white-text truncate">Pizza<span class="right">3.2 mi</span> </span>
+                    <span style="background: linear-gradient(transparent,black);width: 100%"
+                          class="card-title activator white-text truncate">Pizza<span
+                            class="right">3.2 mi</span> </span>
                 </div>
                 <div class="card-content activator">
                     <p class="center-align" style="color: darkred">Ends in 30 minutes.</p><br>
                     <div class="chip" style="background-color: cadetblue; color: white">
-                        <img src="https://static.pexels.com/photos/6413/people-eyes-playing-young.jpg" alt="Contact Person">
+                        <img src="https://static.pexels.com/photos/6413/people-eyes-playing-young.jpg"
+                             alt="Contact Person">
                         Jane Doe
                     </div>
                     <div class="chip" style="margin-top: 4px">
@@ -192,24 +185,25 @@
                 </div>
             </div>
 
-        </div><div class="grid-item">
-        <div class="card hoverable" style="z-index: 99">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator"
-                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title</span>
+        </div>
+        <div class="grid-item">
+            <div class="card hoverable" style="z-index: 99">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
 
-            </div>
-            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-            <div class="card-reveal">
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
                         class="material-icons right">close</i></span>
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
             </div>
         </div>
-    </div>
         <div class="grid-item">
             <div class="card hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
@@ -228,24 +222,25 @@
                 </div>
             </div>
 
-        </div><div class="grid-item">
-        <div class="card hoverable" style="z-index: 99">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator"
-                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title</span>
+        </div>
+        <div class="grid-item">
+            <div class="card hoverable" style="z-index: 99">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator"
+                         src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
 
-            </div>
-            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-            <div class="card-reveal">
+                </div>
+                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
+                <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
                         class="material-icons right">close</i></span>
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
             </div>
         </div>
-    </div>
         <div class="grid-item">
             <div class="card hoverable">
                 <div class="card-image waves-effect waves-block waves-light">
