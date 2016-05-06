@@ -590,8 +590,6 @@ foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker'
     //$scope.startTime;
     //$scope.endTime;
 
-
-
     $scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
