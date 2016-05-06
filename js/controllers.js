@@ -552,7 +552,7 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
 }]);
 
-foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, ,$mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
+foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope ,$mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
     $scope.event = {};
     if (!AuthService.isAuthenticated()) {
         $location.path('/login');
@@ -587,7 +587,9 @@ foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker'
     $scope.clear = 'Clear';
     $scope.close = 'Close';
     var days = 15;
-    $scope.eventTime;
+    //$scope.startTime;
+    //$scope.endTime;
+
 
 
     $scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
