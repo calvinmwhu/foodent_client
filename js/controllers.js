@@ -290,6 +290,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
             UserService.followUser($scope.otherId).then(function (response) {
                 console.log(response);
                 updateUser($scope.otherId);
+                //$scope.user = response.data.data;
             }, function (response) {
                 console.log(response);
             });
@@ -303,6 +304,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
             UserService.unfollowUser($scope.otherId).then(function (response) {
                 console.log(response);
                 updateUser($scope.otherId);
+                //$scope.user = response.data.data;
             }, function (response) {
                 console.log(response);
             });
@@ -322,29 +324,10 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
 
 foodentControllers.controller('EventController', ['$scope', '$routeParams', '$location', 'UserService', 'EventService', 'InviteService', 'AuthService', function ($scope, $routeParams, $location, UserService, EventService, InviteService, AuthService) {
-    $scope.event = {};
-
-    var getUserRequest = function () {
-        return $scope.invite.request.find(function (req) {
-            return req.userId == $scope.currentUserId;
-        });
-    };
-
-    // helper function to get an invite, self-explanatory
-    var updateInvite = function (inviteId) {
-        InviteService.getInviteDetail(inviteId).then(function (response) {
-            console.log(response.data);
-            $scope.invite = response.data.data;
-            $scope.userRequest = getUserRequest();
-        }, function (response) {
-            console.log(response.data);
-        });
-    };
-
     // helper function to get an event, self-explanatory
     var updateEvent = function (id) {
         EventService.getEventDetail(id).then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             $scope.event = response.data.data;
             $scope.invite = $scope.event.invite;
         }, function (response) {
@@ -353,32 +336,29 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
         });
     };
 
-
     //event status
-    var isHosting = function () {
-        return $scope.event && $scope.event.host && $scope.event.host.indexOf($scope.currentUserId) != -1;
+    $scope.isHostForEvent = function () {
+        return $scope.event && $scope.event.host && ($scope.event.host == $scope.currentUserId || $scope.event.host.indexOf($scope.currentUserId) != -1);
     };
 
     var eventEnded = function () {
         return $scope.event && $scope.event.time && $scope.event.time.end < Date.now();
     };
 
-    var inviteStarted = function () {
-        return $scope.invite != undefined && $scope.invite;
+    //invite status
+    $scope.inviteStarted = function () {
+        return $scope.invite!=undefined && $scope.invite;
     };
 
-    var isOpenInvite = function () {
-        return inviteStarted() && $scope.invite.inviteType == 'open';
+    var inviteEnded = function () {
+        return $scope.inviteStarted() && $scope.invite.endTime < Date.now();
     };
 
-    var getRequestStatus = function () {
-        if ($scope.userRequest) {
-            return $scope.userRequest.status;
-        }
-        return null;
+    $scope.isOpenInvite = function () {
+        return $scope.inviteStarted() && $scope.invite.inviteType == 'open';
     };
 
-    // as a host, it can cancel event and modify event and invite
+    // as a host, user can cancel an event
     $scope.cancelEvent = function () {
         if ($scope.isHostForEvent()) {
             EventService.deleteEvent($scope.event._id).then(function (response) {
@@ -389,15 +369,18 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
         }
     };
 
+    // as a host, it can start an invite on an event
     $scope.startInvite = function () {
-        if (!inviteStarted()) {
+        if (!$scope.inviteStarted() && $scope.isHostForEvent()) {
             EventService.addInvite($scope.event._id, {
                 startTime: $scope.inviteStartTime,
                 endTime: $scope.inviteEndTime,
                 inviteType: $scope.inviteType
+                //startTime: '2016-05-29T05:00:00.000Z',
+                //endTime: '2016-05-29T05:00:00.000Z',
+                //inviteType: 'restricted'
             }).then(function (response) {
                 $scope.invite = response.data.data;
-                $scope.userRequest = getUserRequest();
                 console.log($scope.invite);
             }, function (response) {
                 console.log(response);
@@ -405,30 +388,83 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
         }
     };
 
-    // as a host, it can accept a user's request
+    // as a host, it can cancel an invite from an event
+    $scope.cancelInvite = function () {
+        if (!$scope.inviteStarted() && isHostForEvent()) {
+            EventService.removeInvite($scope.event._id).then(function (response) {
+                console.log(response);
+            }, function (response) {
+                console.log(response);
+            });
+        }
+    };
+
+
+    // as a host, it can accept a user's request for an restricted invite (need to request first)
     $scope.acceptUserRequest = function (userId) {
-        InviteService.updateUserInRequestList($scope.invite._id, userId, "accepted").then(function (response) {
-            $scope.invite = response.data.data;
-            console.log(response.data);
-            // after updating user in the request list, it needs to add the user to the guest list
-            return EventService.addUserToGuestList($scope.event._id, userId);
-        }).then(function (response) {
-            $scope.event = response.data;
-            console.log($scope.event);
-        }, function (response) {
-            console.log(response);
-        });
+        if ($scope.isHostForEvent()) {
+            InviteService.updateUserInRequestList($scope.invite._id, userId, "accepted").then(function (response) {
+                $scope.invite = response.data.data;
+                console.log("invite updated", response.data);
+                // after updating user in the request list, it needs to add the user to the guest list
+                return EventService.addUserToGuestList($scope.event._id, userId);
+            }).then(function (response) {
+                $scope.event = response.data.data;
+                console.log($scope.event);
+            }, function (response) {
+                console.log(response);
+            });
+        }
     };
 
     // as a host, it can deny a user's request
     $scope.denyUserRequest = function (userId) {
-        InviteService.updateUserInRequestList($scope.invite._id, userId, "denied").then(function (response) {
-            $scope.invite = response.data;
-            console.log(response.data);
-        }, function (response) {
-
-        });
+        if ($scope.isHostForEvent()) {
+            InviteService.updateUserInRequestList($scope.invite._id, userId, "denied").then(function (response) {
+                $scope.invite = response.data.data;
+                console.log(response.data);
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
     };
+
+    // as a host, it can pend a user's request (this function maynot be useful)
+    $scope.pendUserRequest = function (userId) {
+        if ($scope.isHostForEvent()) {
+            InviteService.updateUserInRequestList($scope.invite._id, userId, "pending").then(function (response) {
+                $scope.invite = response.data.data;
+                console.log(response.data);
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
+    };
+
+    // as a guest, it can request an invite for a restricted event
+    $scope.requestInvite = function (userId) {
+        if ($scope.inviteStarted() && !$scope.isOpenInvite()) {
+            InviteService.addUserToRequestList($scope.invite._id, userId).then(function (response) {
+                $scope.invite = response.data.data;
+                console.log($scope.invite);
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
+    };
+
+    // as a guest, it can join an open invite event
+    $scope.requestToJoinEvent = function (userId) {
+        if ($scope.inviteStarted() && $scope.isOpenInvite()) {
+            EventService.addUserToGuestList($scope.event._id, userId).then(function (response) {
+                $scope.event = response.data.data;
+                console.log(response.data);
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
+    };
+
 
     if (!AuthService.isAuthenticated() || !AuthService.getCurrentUserId()) {
         $location.path('/login');
@@ -437,9 +473,109 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
         updateEvent($routeParams.id);
     }
 
+    var updateGuestList = function () {
+        if ($scope.event) {
+            var queryParams = {
+                where: {
+                    _id: {
+                        $in: $scope.event.guests
+                    }
+                },
+                select: {
+                    _id: 1,
+                    name: 1,
+                    profileImage: 1
+                },
+                sort: {
+                    name: 1
+                },
+                skip: 0
+            };
+            UserService.getUsers(queryParams).then(function (response) {
+                $scope.eventGuestList = response.data.data;
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
+    };
+
+    var updateUserRequestStatus = function () {
+        if ($scope.isHostForEvent() || !$scope.inviteStarted()) {
+            $scope.userRequestStatus = undefined;
+        } else {
+            var userRequest = $scope.invite.request.find(function (req) {
+                return req.userId == $scope.currentUserId;
+            });
+            $scope.userRequestStatus = userRequest ? userRequest.status : undefined;
+        }
+    };
+
+    var updatePendingUser = function () {
+        if (!$scope.inviteStarted()) {
+            $scope.pendingUsers = {};
+        } else {
+            console.log('called');
+            var pendingUsers = $scope.invite.request.filter(function (item) {
+                return item.status == 'pending';
+            });
+            var pendingUserIds = pendingUsers.map(function (item) {
+                return item.userId;
+            });
+            var queryParams = {
+                where: {
+                    _id: {
+                        $in: pendingUserIds
+                    }
+                },
+                select: {
+                    _id: 1,
+                    name: 1,
+                    profileImage: 1
+                },
+                sort: {
+                    name: 1
+                },
+                skip: 0
+            };
+            UserService.getUsers(queryParams).then(function (response) {
+                $scope.pendingUsers = response.data.data;
+            }, function (response) {
+                console.log(response.data);
+            });
+        }
+    };
+
+
+    $scope.$watch('event', updateGuestList, true);
+    $scope.$watch('invite', updateUserRequestStatus, true);
+    $scope.$watch('invite', updatePendingUser, true);
+
 }]);
 
-foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker', function ($scope, $mdpTimePicker) {
+foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
+    $scope.event = {};
+    if (!AuthService.isAuthenticated()) {
+        $location.path('/login');
+    } else {
+        $scope.addEvent = function () {
+            if (!$scope.event.imageUrls) {
+                var idx = Math.floor(Math.random() * DEFAULT_IMAGES.food_urls.length);
+                $scope.event.imageUrls = [DEFAULT_IMAGES.food_urls[idx]];
+            }
+            if (!$scope.event.notes) {
+                var randomNumber = Math.floor(Math.random() * DEFAULT_BIOS.quotes.length);
+                $scope.user.about = DEFAULT_BIOS.quotes[randomNumber];
+            }
+            EventService.addEvent($scope.event).then(function (response) {
+                var newEvent = response.data.event;
+                console.log(newEvent);
+                console.log(response.data.address);
+                $location.path('/event/' + newEvent._id);
+            }, function (response) {
+                console.log(response.data);
+            });
+        };
+    }
 
     $scope.eventDate = new Date();
     $scope.month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -484,10 +620,7 @@ foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',
                 longitude: address.longitude
             }
         }
-
-
     }
-
 }]);
 
 
