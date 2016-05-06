@@ -3,7 +3,7 @@
  */
 var foodentControllers = angular.module('foodentControllers', []);
 
-foodentControllers.controller('HomeController', ['$scope', function ($scope) {
+foodentControllers.controller('HomeController', ['$scope', 'EventService',function ($scope, EventService) {
     /*
      The following lines control the event grid
      */
@@ -25,6 +25,14 @@ foodentControllers.controller('HomeController', ['$scope', function ($scope) {
      */
 
     /* Add service calls below */
+
+    EventService.getEvents().then(function(response){
+        $scope.events = response.data.data;
+    },function(response){
+        console.log(response);
+    });
+
+
 }]);
 
 //NavBarController-- this adds the logout functionality to the nav-bar, call the logout function to logout, will redirect to /home after logout
@@ -147,6 +155,7 @@ foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthSe
 foodentControllers.controller('UserProfileController', ['$scope', '$location', '$routeParams', 'UserService', 'EventService', 'AuthService', function ($scope, $location, $routeParams, UserService, EventService, AuthService) {
 
     $scope.user = {};
+    $scope.events={};
     // helper function to get an user, self-explanatory
     $scope.name = "Anurag" //test
     var $grid = $('.grid');
@@ -246,6 +255,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
     // for current user, call this function on the front-end to get events currently and previous hosted
     $scope.getHostedEvents = function () {
+        console.log("function called");
         var queryParams = {
             where: {
                 _id: {
@@ -255,6 +265,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         EventService.getEvents(queryParams).then(function (response) {
             $scope.hostedEvents = response.data.data;
+            $scope.events = $scope.hostedEvents;
         }, function (response) {
             console.log(response);
         });
@@ -271,6 +282,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         };
         EventService.getEvents(queryParams).then(function (response) {
             $scope.attendedEvents = response.data.data;
+            $scope.events = $scope.attendedEvents;
         }, function (response) {
             console.log(response);
         });
@@ -282,6 +294,7 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
         return $scope.currentId == $scope.otherId;
     };
 
+    //$scope.getAttendedEvents();
 
     // this function follows a specific user
     // only call this function if you are on other's profile page!(you cannot follow yourself)
@@ -614,14 +627,19 @@ foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',
                 formatted_address: address.formatted_address,
                 longitude: address.longitude,
                 latitude: address.latitude,
-                startTime: eventDate.toString(),
-
+                startTime: eventDate,
+                cuisine:[$scope.cuisine],
                 numGuestsAllowed: $scope.eventsGuestsNumber
             };
 
-            if (!$scope.event.imageUrls) {
+            if (!$scope.eventsImageURL) {
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.food_urls.length);
                 $scope.event.imageUrls = [DEFAULT_IMAGES.food_urls[idx]];
+            }
+            else
+            {
+                $scope.event.imageUrls = [$scope.eventsImageURL];
+
             }
 
             EventService.addEvent($scope.event).then(function (response) {
