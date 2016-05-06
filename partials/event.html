@@ -3,10 +3,36 @@
         <div class="event-header">
             <div class="row" style="background-color: #0a0a0a; margin: 0">
                 <div class="col s4 host-box">
-                    iuhdfgjn
+                    <a ng-href="#/users/{{host._id}}">
+                        <div class="center">
+                            <img class="circle responsive-img" src="{{host.profileImage}}">
+                            <p>{{host.name}}</p>
+                        </div>
+                    </a>
+
                 </div>
-                <div class="col s4 title-box">
-                    iuhdfgjnsdfd
+                <div class="col s4 title-box ">
+                    <div>
+                        <p class="event-title center-align">
+                            {{event.name}}
+                        </p>
+                        <br>
+                        <br>
+
+                        <div>
+                            <div class="event-stats col s4 center">
+                                <i class="fa fa-users " aria-hidden="true"> <span class=" stats-text">{{event.numGuestsAllowed}}</span></i>
+                            </div>
+                            <div class="event-stats col s4 center-align">
+                                <i class="fa fa-clock-o" aria-hidden="true"> <span class=" stats-text">{{event.numGuestsAllowed}}</span></i>
+
+                            </div>
+                            <div class="event-stats col s4 center-align">
+                                <i class="fa fa-cutlery" aria-hidden="true"> <span class=" stats-text">{{event.numGuestsAllowed}}</span></i>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col s4 map-box">
@@ -14,10 +40,96 @@
                         <ui-gmap-marker coords="marker.coords" idkey="0">
                         </ui-gmap-marker>
                     </ui-gmap-google-map>
-                    {{map}}
+
                 </div>
             </div>
         </div>
+        <div class="event-body container">
+            <div ng-show="isHostForEvent()" class="event-body-top center-align"><p>Manage your foodent from this
+                page.</p></div>
+            <hr>
+
+            <!--<p ng-show="!isHostForEvent()" class="event-body-top center-align">Browse the various event options here.</p>-->
+            <div>
+                <div ng-show="isHostForEvent() && !inviteStarted()">
+                    <br>
+                    <p>
+                        Whenever you're ready to kick-off the invites, hit this button.
+                    </p>
+                    <!--start time <input type="text" ng-model="inviteStartTime"></input><br>-->
+                    <!--end time <input type="text" ng-model="inviteEndTime"></input><br>-->
+                    <!--type <input type="text" ng-model="inviteType"></input><br>-->
+                    <div class="row">
+                        <div id="invite-hours" class="col input-field col s6"><input type="number"
+                                                                                     ng-model="inviteHours"><label
+                                for="invite-hours">How long are you accepting Invites? (hours)</label></div>
+                        <div id="invite-type" class="col input-field col s6">
+                            <input name="inviteType" type="radio"
+                                   id="open" ng-model="inviteType"
+                                   value="open">
+                            <label for="open">Open</label>
+                            <input name="inviteType" type="radio"
+                                   id="restricted" ng-model="inviteType"
+                                   value="restricted">
+                            <label for="restricted">Restricted</label>
+                        </div>
+
+                    </div>
+
+                    <div><a class="waves-effect waves-light btn"
+                            ng-click="startInvite()" style="color: white">Let 'em
+                        come!</a></div>
+
+                </div>
+                <div ng-show="inviteStarted()">
+                    <p>
+                        <b>Invite type</b>: <span style="color: indianred">{{invite.inviteType}}</span>
+
+                    </p>
+                </div>
+            </div>
+            <p class="center-align">Guest List</p>
+            <ul class="guest-list center" ng-repeat="guest in eventGuestList">
+                <div class="chip">
+                    <img src="{{guest.profileImage}}">
+                    {{guest.name}}
+                </div>
+
+                <!--<li class="collection-item avatar">-->
+                <!--<img src="{{guest.profileImage}}" class="circle">-->
+                <!--<span class="Title">{{guest.name}}</span>-->
+                <!--</li>-->
+            </ul>
+
+            <hr>
+            <br>
+            <br>
+            <p class="center-align">Pending Invites List</p>
+
+            <div>
+                <div ng-repeat="user in pendingUsers">
+                    <a ng-href="#/users/{{user._id}}">
+                    <div class="card">
+                        <div class="card-content white-text">
+                            <img src="{{user.profileImage}}" class="circle responsive-img left" style="height: 60px; margin-right: 20px">
+                            <span class="card-title" style="color: black">{{user.name}}</span>
+                            <!--<p>{{user.about}}</p>-->
+                        </div>
+                        <div class="card-action">
+                            <a class="btn green lighten-4" ng-click="acceptUserRequest(user._id)">ACCEPT</a>
+                            <a class="btn red lighten-3" ng-click="denyUserRequest(user._id)">DENY</a>
+                        </div>
+                    </div></a>
+                    <!--<a ng-show="isHostForEvent()" ng-click="acceptUserRequest(user._id)">ACCEPT</a>-->
+                    <!--<a ng-show="isHostForEvent()" ng-click="denyUserRequest(user._id)">DENY</a>-->
+                    <!--<a ng-show="isHostForEvent()" ng-click="pendUserRequest(user._id)">PEND</a>-->
+                    <!--<br><br>-->
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 </div>
 
@@ -40,15 +152,14 @@
 
     <div><h3>Invite:</h3><br>
         {{invite}}
-        <div ng-show="isHostForEvent() && !inviteStarted()"
-        ">
-        start time <input type="text" ng-model="inviteStartTime"></input><br>
-        end time <input type="text" ng-model="inviteEndTime"></input><br>
-        type <input type="text" ng-model="inviteType"></input><br>
+        <div ng-show="isHostForEvent() && !inviteStarted()">
+            start time <input type="text" ng-model="inviteStartTime"></input><br>
+            end time <input type="text" ng-model="inviteEndTime"></input><br>
+            type <input type="text" ng-model="inviteType"></input><br>
 
-        <a ng-click="startInvite()">Create new invite
+            <a ng-click="startInvite()">Create new invite
 
-
+        </div>
         </a>
         <a ng-show="!isHostForEvent() && inviteStarted() && !isOpenInvite()" ng-click="requestInvite(currentUserId)">Request
             invite</a>

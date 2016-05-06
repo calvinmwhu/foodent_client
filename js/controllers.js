@@ -325,6 +325,11 @@ foodentControllers.controller('UserProfileController', ['$scope', '$location', '
 
 foodentControllers.controller('EventController', ['$scope', '$routeParams', '$location', 'UserService', 'EventService', 'InviteService', 'AuthService', function ($scope, $routeParams, $location, UserService, EventService, InviteService, AuthService) {
     // helper function to get an event, self-explanatory
+    $scope.inviteStartTime="";
+    $scope.inviteEndTime="";
+    $scope.inviteHours= 3;
+
+
     var updateEvent = function (id) {
         EventService.getEventDetail(id).then(function (response) {
             //console.log(response.data);
@@ -333,12 +338,12 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
             getHostInfo($scope.event.host);
             //$scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
             console.log($scope.event);
-            $scope.map = {center: {latitude: $scope.event.longitude, longitude: $scope.event.latitude}, zoom: 15};
+            $scope.map = {center: {latitude: $scope.event.latitude, longitude: $scope.event.longitude}, zoom: 15};
             $scope.marker = {
                 id: "0",
                 coords: {
-                    latitude: $scope.event.longitude,
-                    longitude: $scope.event.latitude
+                    latitude: $scope.event.latitude,
+                    longitude: $scope.event.longitude
                 }
             }
 
@@ -390,14 +395,21 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
             });
         }
     };
-
+    Date.prototype.addHours= function(h){
+        this.setHours(this.getHours()+h);
+        return this;
+    };
     // as a host, it can start an invite on an event
     $scope.startInvite = function () {
         if (!$scope.inviteStarted() && $scope.isHostForEvent()) {
+            var currentTime = new Date();
             EventService.addInvite($scope.event._id, {
-                startTime: $scope.inviteStartTime,
-                endTime: $scope.inviteEndTime,
-                inviteType: $scope.inviteType
+                //startTime: $scope.inviteStartTime,
+                //endTime: $scope.inviteEndTime,
+                startTime: currentTime,
+                inviteHours:$scope.inviteHours,
+                //endTime: currentTime.addHours(parseInt($scope.inviteHours)),
+                inviteType: $scope.inviteType,
                 //startTime: '2016-05-29T05:00:00.000Z',
                 //endTime: '2016-05-29T05:00:00.000Z',
                 //inviteType: 'restricted'
@@ -580,16 +592,20 @@ foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',
         $location.path('/login');
     } else {
         $scope.addEvent = function () {
+            //$('select').material_select();
+
             //construct the event object
             var eventDate = new Date($scope.eventDate);
             var day = eventDate.getDay();
             var month = eventDate.getMonth();
             var year = eventDate.getYear();
-            var startTime = new Date($scope.startTime);
-            var endTime = new Date($scope.endTime);
+            eventDate = eventDate.setHours($scope.eventTime);
+            console.log(eventDate);
 
-            var eventStartTime = new Date(year, month, day, startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
-            var eventEndTime = new Date(year, month, day, endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+            //var endTime = new Date($scope.endTime);
+
+            //var eventStartTime = new Date(year, month, day, startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+            //var eventEndTime = new Date(year, month, day, endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
 
             $scope.event = {
                 name: $scope.eventName,
@@ -598,8 +614,9 @@ foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',
                 formatted_address: address.formatted_address,
                 longitude: address.longitude,
                 latitude: address.latitude,
-                start: eventStartTime,
-                end: eventEndTime
+                startTime: eventDate.toString(),
+
+                numGuestsAllowed: $scope.eventsGuestsNumber
             };
 
             if (!$scope.event.imageUrls) {
