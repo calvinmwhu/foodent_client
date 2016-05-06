@@ -51,7 +51,12 @@ app.constant('AUTH_EVENTS', {
         'http://static1.consumerreportscdn.org/content/dam/cro/magazine-articles/2014/August/CRM_Page15_FastFood_Opener_Chart_08-14.jpg',
         'http://barcodedc.com/wp-content/gallery/food/pizza-junk-food-600.jpg',
         'http://i.huffpost.com/gen/2745340/images/o-ORGANIC-facebook.jpg',
-        'http://www.wealthladdermagazine.com/wp-content/uploads/2016/03/ALS-Food-Hero.jpg'
+        'http://www.wealthladdermagazine.com/wp-content/uploads/2016/03/ALS-Food-Hero.jpg',
+        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTb7Lp2x8KB23hPq4_uqk2ArTGbnpH_82cNz0f0yxMkrj_t_tnB',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrtIeiQZsINyn2JNRxaK8PrJ61Wdn479urf1WL01bs-ku0PA4I',
+        'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGbCTJ1t3Jk3HTBS4FXraFWmjxmzf7YgrgCKmojKVGC5TyK4Aj',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCyCTBvo81j_GHl20Y-mL9QwQryJmXX-7Nduk88LgVNOpayaXf',
+        'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQemNb-nU6ZaoWLcvTUeJyCfC9YkDnmOXNe7zJZYesH-MkQLnK0'
     ]
 }).constant('DEFAULT_BIOS', {
     quotes: [
