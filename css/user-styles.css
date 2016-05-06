@@ -1,7 +1,7 @@
 .user-container {
   margin: 20px;
   margin-top: 50px;
-  background-color: #eaeaea;
+  background-color: white;
   padding: 25px; }
   .user-container .user-image-container {
     height: 200px;
@@ -10,39 +10,30 @@
       max-height: 100%;
       max-weight: 100%; }
   .user-container .user-name {
-    margin: 0;
     font-size: 3.2em;
-    font-weight: 300;
-    letter-spacing: 2px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 50px;
     padding: 0;
-    margin-bottom: -30px;
+    margin-bottom: -20px;
     font-family: 'Raleway', sans-serif; }
   .user-container .user-about {
     margin: 0;
+    margin-top: 15px;
     font-weight: 300;
-    font-size: 1.8em;
+    font-size: 1.5em;
     color: darkgray; }
   .user-container .user-stats-container {
-    font-weight: 500;
-    font-size: 1.2em;
+    font-weight: 300;
+    font-size: 1.0em;
     color: indianred; }
-    .user-container .user-stats-container .user-followers {
+    .user-container .user-stats-container .user-stats-label {
       color: indianred;
       cursor: pointer;
       cursor: hand;
       margin: 0;
       padding: 0 !important; }
-    .user-container .user-stats-container .user-foodents {
-      cursor: pointer;
-      cursor: hand;
-      color: indianred;
-      margin: 0;
-      padding: 0 !important; }
-    .user-container .user-stats-container .user-following {
-      cursor: pointer;
-      cursor: hand;
-      color: indianred;
-      margin: 0;
-      padding: 0 !important; }
+      .user-container .user-stats-container .user-stats-label .user-stats-figure {
+        font-weight: 600; }
 
 /*# sourceMappingURL=user-styles.css.map */

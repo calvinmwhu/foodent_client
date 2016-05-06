@@ -7,8 +7,8 @@
             <div class="col s9 user-info-container valign">
 
                 <!--Settings or Follow options-->
-
-                <a class="settings right" ><i style="color: black; font-size: 2.2em" ng-show="isMyself()" class=" fa fa-cog"></i></a>
+<a id="edit-profile-button" ng-show="isMyself()" class="btn-floating btn-small waves-effect waves-light red right"><i class="material-icons">settings</i></a>
+<!--                <a class="settings right" ><i style="color: black; font-size: 2.2em" ng-show="isMyself()" class=" fa fa-cog"></i></a>-->
                 <a  id="followButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="followUser()" ng-if=" !isMyself() && !isFollowing()">Follow</a>
                 <a  id="unFollowButton" class="btn right  light-green lighten-3" style="color: #0a0a0a;" ng-click="unfollowUser()" ng-show="isFollowing()">unfollow</a>
 
@@ -26,13 +26,13 @@
 
                 <div class="row user-stats-container">
                     <div class=" col s4" style="padding: 0;">
-                        <p class="user-foodents ">{{foodentCount}} foodents</p>
+                        <p class="user-stats-label"><span class="user-stats-figure">{{foodentCount}}</span> foodents</p>
                     </div>
                     <div class="  col s4" style="padding:0;">
-                        <a ng-click="getFollowers()"><p class="user-followers">{{user.followers.length}} followers</p></a>
+                        <a ng-click="getFollowers()"><p class="user-stats-label"><span class="user-stats-figure">{{user.followers.length}} </span>followers</p></a>
                     </div>
                     <div class=" col s4" style="padding: 0">
-                        <a ng-click="getFollowings()"><p class="user-following">{{user.following.length}} following</p></a>
+                        <a ng-click="getFollowings()"><p class="user-stats-label"><span class="user-stats-figure">{{user.following.length}}</span> following</p></a>
                     </div>
                 </div>
             </div>

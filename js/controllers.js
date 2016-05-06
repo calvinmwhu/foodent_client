@@ -440,6 +440,33 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 }]);
 
 foodentControllers.controller('AddEventController', ['$scope', function ($scope) {
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 17 };
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            $scope.$apply(function(){
+                $scope.position = position;
+                $scope.map.center.latitude = position.coords.latitude;
+                $scope.map.center.longitude = position.coords.longitude;
+
+            });
+        });
+    }
+    $scope.gPlace;
+    var address = {};
+    $scope.placeAdded = function(){
+        var place = $scope.gPlace.getPlace();
+        console.log(place);
+        address.latitude = place.geometry.location.lat();
+        address.longitude = place.geometry.location.lng();
+
+        $scope.map.center.latitude =address.latitude;
+        $scope.map.center.longitude = address.longitude;
+        $scope.map.zoom = 17;
+
+
+
+
+    }
 
 }]);
 
