@@ -16,6 +16,7 @@
     .create-event-container .create-event-breadcrumbs a {
       color: indianred; }
   .create-event-container .angular-google-map-container {
-    height: 300px; }
+    height: 300px;
+    border: 10px solid white; }
 
 /*# sourceMappingURL=add-event-styles.css.map */

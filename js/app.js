@@ -1,7 +1,7 @@
 /**
  * Created by an5ra on 5/2/2016.
  */
-var app = angular.module('foodent-main', ['ngRoute', 'ngAnimate', 'foodentControllers', 'foodentServices','uiGmapgoogle-maps']);
+var app = angular.module('foodent-main', ['ngRoute', 'ngAnimate', 'foodentControllers', 'foodentServices', 'uiGmapgoogle-maps', 'ui.materialize', "ngAria", "ngMessages", "mdPickers","ngMaterial"]);
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/home', {
         templateUrl: './partials/home.html',
@@ -36,7 +36,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 app.constant('AUTH_EVENTS', {
     notAuthenticated: 'auth-not-authenticated'
 }).constant('API_ENDPOINT', {
-     url: 'http://198.199.102.246:4000/api'
+    url: 'http://198.199.102.246:4000/api'
     //  For a simulator use: url: 'http://127.0.0.1:8080/api'
 //    url: 'http://127.0.0.1:4000/api'
 
@@ -64,25 +64,27 @@ app.constant('AUTH_EVENTS', {
     ]
 });
 
-app.directive('googleplace', function() {
+app.directive('googleplace', function () {
     return {
         require: 'ngModel',
-        link: function(scope, element, attrs, model) {
+        link: function (scope, element, attrs, model) {
             var options = {
                 types: [],
                 componentRestrictions: {}
             };
             scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
 
-            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+            google.maps.event.addListener(scope.gPlace, 'place_changed', function () {
                 scope.placeAdded();
-                scope.$apply(function() {
+                scope.$apply(function () {
                     model.$setViewValue(element.val());
                 });
             });
         }
     };
 });
+
+
 
 
 

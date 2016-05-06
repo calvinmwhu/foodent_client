@@ -2,36 +2,105 @@
     <div class="create-event-container z-depth-2">
 
         <div class="create-event-title left-align "><p>What's cookin'?</p></div>
-        <div class="create-event-subtitle left-align"><p>Creating an event (a.k.a Foodent) is easier than cooking scrambled eggs.</p>
-           <br>
-            <hr>
-        </div>
-        <div class="create-event-breadcrumbs center">
-            <a>BASICS</a>
-            <i style="margin-left: 10px; margin-right: 10px;" class="fa fa-angle-right" aria-hidden="true"></i>
-            <a>PICTURES AND TAGS</a>
-            <i style="margin-left: 10px; margin-right: 10px;"class="fa fa-angle-right" aria-hidden="true"></i>
-            <a>INVITES</a>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input  id="first_name2" type="text" class="validate">
-                <label  for="first_name2">What's the name of the event?</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input  googleplace id="event-address" type="text" class="validate" ng-model="chosenPlace">
-                <label  for="event-address">Where is it happening?</label>
-            </div>
-            <div class="col s6">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-            </div>
+        <div class="create-event-subtitle left-align"><p>Creating an event (a.k.a Foodent) is easier than cooking
+            scrambled eggs.</p>
+            <br>
+            <!--<hr>-->
         </div>
 
+        <div class="row">
+            <div class="left-side-form col s5">
+                <div class="input-field col s12">
+                    <input id="first_name" type="text" class="validate" ng-model="eventName">
+                    <label for="first_name">What's the name of the event?</label>
+                </div>
+                <div class="input-field col s12">
+                    <input googleplace id="event-address" type="text" class="validate" ng-model="eventPlace"
+                           placeholder="">
+                    <label for="event-address">Where is it happening?</label>
+                </div>
 
+                <div class="input-field col s12">
+                    <!--<input input-date id="event-date" type="date" class="datepicker" ng-model="eventDate" format="dd/mm/yyyy">-->
+                    <input input-date
+                           type="text"
+                           name="created"
+                           id="event-date"
+                           ng-model="eventDate"
+                           container="body"
+                           format="dd/mm/yyyy"
+                           months-full="{{ month }}"
+                           months-short="{{ monthShort }}"
+                           weekdays-full="{{ weekdaysFull }}"
+                           weekdays-short="{{ weekdaysShort }}"
+                           weekdays-letter="{{ weekdaysLetter }}"
+
+                           today="today"
+                           clear="clear"
+                           close="close"
+                           select-years="15"
+                    >
+                    <label class="active" for="event-date">When is it?</label>
+                </div>
+                <div class="input-field col s6">
+                    <mdp-time-picker id="start-time" ng-model="startTime"></mdp-time-picker>
+
+                    <label class="active" for="start-time">Start Time</label>
+
+
+                </div>
+                <div class="input-field col s6">
+                    <mdp-time-picker id="end-time" ng-model="endTime"></mdp-time-picker>
+
+                    <label class="active" for="start-time">End Time</label>
+
+
+                </div>
+
+
+            </div>
+
+            <div style="padding: 0" class="col s6 offset-s1 z-depth-1">
+                <ui-gmap-google-map class='map' center='map.center' zoom='map.zoom'>
+                    <ui-gmap-marker coords="marker.coords" idkey="0">
+                    </ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+
+            <div class="input-field col s12">
+                <input id="food-description" type="text" class="validate" ng-model="foodDescription">
+                <label for="food-description">So what exactly are you cooking?</label>
+            </div>
+
+
+        </div>
+<div class="row">
+    <div class="input-field col s6">
+        <select multiple>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+        </select>
+        <!--<label>Materialize Multiple Select</label>-->
+    </div>
+</div>
+
+        <div class="center">
+
+            <a class="waves-effect waves-light btn" style="color: white"><i class="material-icons right">create</i>Create
+                Foodent!</a>
+
+        </div>
     </div>
 
+    <!--<ul style="position: fixed;top:35%;right:50px; font-size: 120%"-->
+    <!--class="section table-of-contents hide-on-medium-only">-->
+    <!--<li><a ng-href="#/add-event/introduction">Basic information</a></li>-->
+    <!--<li><a ng-href="#/add-event/structure">Food and Stuff</a></li>-->
+    <!--<li><a ng-href="#/add-event/structure">Pictures and Tags</a></li>-->
+    <!--<li><a ng-href="#/add-event/initialization">Invites</a></li>-->
+    <!--</ul>-->
 </div>
 
 

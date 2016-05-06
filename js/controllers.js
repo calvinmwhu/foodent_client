@@ -115,10 +115,10 @@ foodentControllers.controller('LoginController', ['$scope', '$location', 'AuthSe
 
 
     $('#title-text').typeIt({
-        whatToType: ["With Foodent, there <strong>is</strong> such thing as a free lunch.","Foodent connects <strong>generous</strong> people with <strong>hungry</strong> people.", "Foodent is Freeganism, but <i>healthy</i>.", "Foodent like tinder, but the date's <strong>guaranteed</strong>."],
+        whatToType: ["With Foodent, there <strong>is</strong> such thing as a free lunch.", "Foodent connects <strong>generous</strong> people with <strong>hungry</strong> people.", "Foodent is Freeganism, but <i>healthy</i>.", "Foodent like tinder, but the date's <strong>guaranteed</strong>."],
         breakLines: false,
-        lifeLike:true,
-        loop:true,
+        lifeLike: true,
+        loop: true,
         typeSpeed: 100
     }, function () {
 
@@ -407,25 +407,25 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
     // as a host, it can accept a user's request
     $scope.acceptUserRequest = function (userId) {
-        InviteService.updateUserInRequestList($scope.invite._id, userId, "accepted").then(function(response){
+        InviteService.updateUserInRequestList($scope.invite._id, userId, "accepted").then(function (response) {
             $scope.invite = response.data.data;
             console.log(response.data);
             // after updating user in the request list, it needs to add the user to the guest list
             return EventService.addUserToGuestList($scope.event._id, userId);
-        }).then(function(response){
+        }).then(function (response) {
             $scope.event = response.data;
             console.log($scope.event);
-        },function(response){
+        }, function (response) {
             console.log(response);
         });
     };
 
     // as a host, it can deny a user's request
     $scope.denyUserRequest = function (userId) {
-        InviteService.updateUserInRequestList($scope.invite._id, userId, "denied").then(function(response){
+        InviteService.updateUserInRequestList($scope.invite._id, userId, "denied").then(function (response) {
             $scope.invite = response.data;
             console.log(response.data);
-        },function(response){
+        }, function (response) {
 
         });
     };
@@ -439,11 +439,25 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
 }]);
 
-foodentControllers.controller('AddEventController', ['$scope', function ($scope) {
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 17 };
+foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',function ($scope,$mdpTimePicker) {
+
+    $scope.eventDate = new Date();
+    $scope.month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    $scope.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    $scope.weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    $scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    //$scope.disable = [false, 1, 7];
+    $scope.today = 'Today';
+    $scope.clear = 'Clear';
+    $scope.close = 'Close';
+    var days = 15;
+    $scope.eventTime;
+
+
+    $scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position){
-            $scope.$apply(function(){
+        navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.$apply(function () {
                 $scope.position = position;
                 $scope.map.center.latitude = position.coords.latitude;
                 $scope.map.center.longitude = position.coords.longitude;
@@ -453,17 +467,23 @@ foodentControllers.controller('AddEventController', ['$scope', function ($scope)
     }
     $scope.gPlace;
     var address = {};
-    $scope.placeAdded = function(){
+    $scope.placeAdded = function () {
         var place = $scope.gPlace.getPlace();
-        console.log(place);
+        //console.log(place);
         address.latitude = place.geometry.location.lat();
         address.longitude = place.geometry.location.lng();
-
-        $scope.map.center.latitude =address.latitude;
+        address.formatted_address = place.formatted_address;
+        $scope.map.center.latitude = address.latitude;
         $scope.map.center.longitude = address.longitude;
-        $scope.map.zoom = 17;
-
-
+        $scope.map.zoom = 15;
+        var myLatlng = new google.maps.LatLng(address.latitude, address.longitude);
+        $scope.marker = {
+            id: "0",
+            coords: {
+                latitude: address.latitude,
+                longitude: address.longitude
+            }
+        }
 
 
     }
