@@ -347,7 +347,7 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
     //invite status
     $scope.inviteStarted = function () {
-        return $scope.invite!=undefined && $scope.invite;
+        return $scope.invite != undefined && $scope.invite;
     };
 
     var inviteEnded = function () {
@@ -558,19 +558,37 @@ foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker'
         $location.path('/login');
     } else {
         $scope.addEvent = function () {
+            //construct the event object
+            var eventDate = new Date($scope.eventDate);
+            var day = eventDate.getDay();
+            var month = eventDate.getMonth();
+            var year = eventDate.getYear();
+            var startTime = new Date($scope.startTime);
+            var endTime = new Date($scope.endTime);
+
+            var eventStartTime = new Date(year, month, day, startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+            var eventEndTime = new Date(year, month, day, endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+
+            $scope.event = {
+                name: $scope.eventName,
+                host: AuthService.getCurrentUserId(),
+                notes: $scope.foodDescription,
+                formatted_address: address.formatted_address,
+                longitude: address.longitude,
+                latitude: address.latitude,
+                start: eventStartTime,
+                end: eventEndTime
+            };
+
             if (!$scope.event.imageUrls) {
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.food_urls.length);
                 $scope.event.imageUrls = [DEFAULT_IMAGES.food_urls[idx]];
             }
-            if (!$scope.event.notes) {
-                var randomNumber = Math.floor(Math.random() * DEFAULT_BIOS.quotes.length);
-                $scope.user.about = DEFAULT_BIOS.quotes[randomNumber];
-            }
+
             EventService.addEvent($scope.event).then(function (response) {
                 var newEvent = response.data.event;
-                console.log(newEvent);
-                console.log(response.data.address);
-                $location.path('/event/' + newEvent._id);
+                console.log('new event received: ',newEvent);
+                $location.path('/events/' + newEvent._id);
             }, function (response) {
                 console.log(response.data);
             });
@@ -587,8 +605,8 @@ foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker'
     $scope.clear = 'Clear';
     $scope.close = 'Close';
     var days = 15;
-    $scope.eventTime;
-
+    //$scope.startTime;
+    //$scope.endTime;
 
     $scope.map = {center: {latitude: 45, longitude: -73}, zoom: 17};
     if (navigator.geolocation) {
@@ -620,7 +638,11 @@ foodentControllers.controller('AddEventController', ['$scope',  '$mdpTimePicker'
                 longitude: address.longitude
             }
         }
-    }
+    };
+
+
+    //$scope.thour = $scope.startTime.getHours();
+
 }]);
 
 
