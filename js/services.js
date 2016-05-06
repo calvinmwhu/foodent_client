@@ -215,6 +215,14 @@ foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', 'AuthSer
         return $http(config);
     };
 
+    var removeInvite = function (eventId) {
+        var config = {
+            method: 'DELETE',
+            url: API_ENDPOINT.url + '/events/' + eventId + '/invite'
+        };
+        return $http(config);
+    };
+
     return {
         getEventDetail: getEventDetail,
         getEvents: getEvents,
@@ -222,7 +230,8 @@ foodentServices.factory('EventService', ['$http', '$q', 'API_ENDPOINT', 'AuthSer
         deleteEvent: deleteEvent,
         addUserToGuestList: addUserToGuestList,
         removeUserFromGuestList: removeUserFromGuestList,
-        addInvite: addInvite
+        addInvite: addInvite,
+        removeInvite: removeInvite
     };
 }]);
 

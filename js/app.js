@@ -46,6 +46,12 @@ app.constant('AUTH_EVENTS', {
         'http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-bad-werewolf.png',
         'http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-ponsy-deer.png',
         'http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-braindead-zombie.png'
+    ],
+    food_urls: [
+        'http://static1.consumerreportscdn.org/content/dam/cro/magazine-articles/2014/August/CRM_Page15_FastFood_Opener_Chart_08-14.jpg',
+        'http://barcodedc.com/wp-content/gallery/food/pizza-junk-food-600.jpg',
+        'http://i.huffpost.com/gen/2745340/images/o-ORGANIC-facebook.jpg',
+        'http://www.wealthladdermagazine.com/wp-content/uploads/2016/03/ALS-Food-Hero.jpg'
     ]
 }).constant('DEFAULT_BIOS', {
     quotes: [
