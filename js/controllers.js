@@ -407,9 +407,9 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
                 //startTime: $scope.inviteStartTime,
                 //endTime: $scope.inviteEndTime,
                 startTime: currentTime,
-                inviteHours:$scope.inviteHours,
-                //endTime: currentTime.addHours(parseInt($scope.inviteHours)),
-                inviteType: $scope.inviteType,
+                //inviteHours:$scope.inviteHours,
+                endTime: currentTime.addHours(parseInt($scope.inviteHours)),
+                inviteType: $scope.inviteType
                 //startTime: '2016-05-29T05:00:00.000Z',
                 //endTime: '2016-05-29T05:00:00.000Z',
                 //inviteType: 'restricted'
@@ -586,26 +586,27 @@ foodentControllers.controller('EventController', ['$scope', '$routeParams', '$lo
 
 }]);
 
+
+//Date.prototype.addHours= function(h){
+//    this.setHours(this.getHours()+h);
+//    return this;
+//};
+
 foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker', '$location', 'UserService', 'EventService', 'AuthService', 'DEFAULT_IMAGES', 'DEFAULT_BIOS', function ($scope, $mdpTimePicker, $location, UserService, EventService, AuthService, DEFAULT_IMAGES, DEFAULT_BIOS) {
+
+
     $scope.event = {};
     if (!AuthService.isAuthenticated()) {
         $location.path('/login');
     } else {
         $scope.addEvent = function () {
-            //$('select').material_select();
+            //console.log($scope.eventDate);
+            //console.log($scope.eventTime);
 
-            //construct the event object
-            var eventDate = new Date($scope.eventDate);
-            var day = eventDate.getDay();
-            var month = eventDate.getMonth();
-            var year = eventDate.getYear();
-            eventDate = eventDate.setHours($scope.eventTime);
-            console.log(eventDate);
+            var startTime = Date($scope.eventDate);
+            var endTime = new Date(startTime);
+            endTime.setHours(endTime.getHours() + parseInt($scope.eventTime));
 
-            //var endTime = new Date($scope.endTime);
-
-            //var eventStartTime = new Date(year, month, day, startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
-            //var eventEndTime = new Date(year, month, day, endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
 
             $scope.event = {
                 name: $scope.eventName,
@@ -614,10 +615,12 @@ foodentControllers.controller('AddEventController', ['$scope', '$mdpTimePicker',
                 formatted_address: address.formatted_address,
                 longitude: address.longitude,
                 latitude: address.latitude,
-                startTime: eventDate.toString(),
-
+                startTime: startTime.toString(),
+                endTime: endTime.toString(),
                 numGuestsAllowed: $scope.eventsGuestsNumber
             };
+
+            console.log($scope.event);
 
             if (!$scope.event.imageUrls) {
                 var idx = Math.floor(Math.random() * DEFAULT_IMAGES.food_urls.length);

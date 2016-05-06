@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/an5rag/foodent-client/issues"
   },
-  "homepage": "https://github.com/an5rag/foodent-client#readme"
+  "homepage": "https://github.com/an5rag/foodent-client#readme",
+  "dependencies": {
+    "angularjs-datepicker": "^2.1.0"
+  }
 }
