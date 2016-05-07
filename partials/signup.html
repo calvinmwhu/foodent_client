@@ -1,32 +1,43 @@
-<div class="row">
-    <div class="medium-6 medium-centered large-4 large-centered columns">
-        <form>
-            <div class="row column log-in-form">
-                <h4 class="text-center">Sign Up</h4>
-                <label>Name
-                    <input type="text" placeholder="name" ng-model="user.name" required>
-                </label>
-                <label>Email
-                    <input type="text" placeholder="somebody@example.com" ng-model="user.email" required>
-                </label>
-                <label>Password
-                    <input type="password" placeholder="Password" ng-model="user.password" required>
-                </label>
-                <label>About
-                    <input type="text" placeholder="something about yourself" ng-model="user.about" required>
-                </label>
-                <label>Profile Image Url
-                    <input type="text" placeholder="profile image url" ng-model="user.profileImageUrl" required>
-                </label>
-                <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
-                <p><a type="submit" class="button expanded" ng-click="signup()">Signup</a></p>
+
+
+<div class="login-container">
+    <div class="container">
+
+
+        <div class=" card" style="margin: 0; margin-top:40px;padding:40px">
+            <div>
+                <form>
+                    <div class="row log-in-form">
+                        <h4>Signup</h4>
+                        <label>Name
+                            <input type="text" placeholder="name" ng-model="user.name" required>
+                        </label>
+                        <label>Email
+                            <input type="text" placeholder="somebody@example.com" ng-model="user.email" required>
+                        </label>
+                        <label>Password
+                            <input type="password" placeholder="Password" ng-model="user.password" required>
+                        </label>
+                        <label>About
+                            <input type="text" placeholder="something about yourself" ng-model="user.about" required>
+                        </label>
+                        <!--<label>Profile Image Url-->
+                            <!--<input type="text" placeholder="profile image url" ng-model="user.profileImageUrl" required>-->
+                        <!--</label>-->
+                        <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label>-->
+                        <p><a style="margin-right: 20px" type="submit" class="btn white-text" ng-click="signup()" ng-submit="signup()">Sign Up</a>
+
+                        <!--<p><a type="submit" class="button expanded" ng-click="signup()">Signup</a></p>-->
+
+                        <!--<p class="text-center"><a href="#">Forgot your password?</a></p>-->
+                    </div>
+                </form>
+
             </div>
-        </form>
+        </div>
     </div>
-    <!--<div flow-init>-->
-    <!--<input type="file" flow-btn />-->
-    <!--<input type="file" flow-btn flow-directory />-->
-    <!--Input OR Other element as upload button-->
-    <!--<span flow-btn>Upload File</span>-->
-    <!--</div>-->
 </div>
+
+
+
+

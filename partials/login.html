@@ -1,31 +1,35 @@
 
-
-<div class="row">
-    <div class="medium-6 medium-centered large-4 large-centered columns">
-        <form>
-            <div class="row column log-in-form">
-                <h4 class="text-center">Log in with you email account</h4>
-                <label>Email
-                    <input type="text" placeholder="somebody@example.com" ng-model="user.email" required>
-                </label>
-                <label>Password
-                    <input type="password" placeholder="Password" ng-model="user.password" required>
-                </label>
-                <input id="show-password" type="checkbox"><label for="show-password">Show password</label>
-                <p><a type="submit" class="button expanded" ng-click="login()">Log In</a></p>
-                <p class="text-center"><a href="#">Forgot your password?</a></p>
-            </div>
-        </form>
-    </div>
-</div>
-<div>
+<div class="login-container">
     <div class="container">
 
-        <p class="title center">
+        <p class="title-main center">
 
-             <span id="title-text"></span>
+            <span id="title-text"></span>
         </p>
 
+        <div class=" card" style="margin: 0; padding:40px">
+            <div>
+                <form>
+                    <div class="row log-in-form">
+                        <h4 >Log in</h4>
+                        <label>Email
+                            <input type="text" placeholder="somebody@example.com" ng-model="user.email" required>
+                        </label>
+                        <label>Password
+                            <input type="password" placeholder="Password" ng-model="user.password" required>
+                        </label>
+                        <input id="show-password" type="checkbox"><label for="show-password">Show password</label>
+                        <p><a style="margin-right: 20px" type="submit" class="btn white-text" ng-click="login()" ng-submit="login()">Log In</a>
+                        <a type="submit" class="btn red white-text" ng-href="#/signup">Sign Up</a></p>
 
+                        <!--<p class="text-center"><a href="#">Forgot your password?</a></p>-->
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+

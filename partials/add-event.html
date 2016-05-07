@@ -28,7 +28,7 @@
                            id="event-date"
                            ng-model="eventDate"
                            container="body"
-                           format="dd/mm/yyyy"
+                           format="mm/dd/yyyy"
                            months-full="{{ month }}"
                            months-short="{{ monthShort }}"
                            weekdays-full="{{ weekdaysFull }}"
@@ -45,22 +45,22 @@
 
 
                 <!--<div class="input-field col s6">-->
-                    <!--<mdp-time-picker id="start-time" ng-model="startTime"></mdp-time-picker>-->
+                <!--<mdp-time-picker id="start-time" ng-model="startTime"></mdp-time-picker>-->
 
-                    <!--<label class="active" for="start-time">Start Time</label>-->
+                <!--<label class="active" for="start-time">Start Time</label>-->
 
 
                 <!--</div>-->
                 <!--<div class="input-field col s6">-->
-                    <!--<mdp-time-picker id="end-time" ng-model="endTime"></mdp-time-picker>-->
+                <!--<mdp-time-picker id="end-time" ng-model="endTime"></mdp-time-picker>-->
 
-                    <!--<label class="active" for="start-time">End Time</label>-->
+                <!--<label class="active" for="start-time">End Time</label>-->
 
 
                 <!--</div>-->
                 <div class="input-field col s12">
                     <i class="prefix fa fa-clock-o" style="font-size: 40px"></i>
-                    <select  style="margin-left: 40px" class="browser-default" ng-model="eventTime">
+                    <select style="margin-left: 40px" class="browser-default" ng-model="eventTime">
                         <option value="" disabled selected>What hour of the day?</option>
                         <option value="0">Midnight</option>
                         <option value="1">1 AM</option>
@@ -101,8 +101,6 @@
             </div>
 
 
-
-
         </div>
         <div class="row">
             <div class="input-field col s3">
@@ -113,19 +111,57 @@
                 <input id="events-guests-number" type="number" class="validate" ng-model="eventsGuestsNumber">
                 <label for="events-guests-number">Number of guests expected</label>
             </div>
+            <div class="input-field col s3 offset-s1 ">
+                <input id="events-imageURL" type="text" class="validate" ng-model="eventsImageURL">
+                <label for="events-imageURL">Enter a nice image URL here!</label>
+            </div>
 
             <!--<form action="#">-->
-                <!--<p class="range-field">-->
-                <!--</p>-->
+            <!--<p class="range-field">-->
+            <!--</p>-->
             <!--</form>-->
 
         </div>
+        <div class="container">
+            <div id="cuisine-radio" class="col input-field col s6">
+                <input name="cuisine" type="radio"
+                       id="open1" ng-model="cuisine"
+                       value="American">
+                <label for="open1">American</label>
+
+                <input name="cuisine" type="radio"
+                       id="open2" ng-model="cuisine"
+                       value="Chinese">
+                <label for="open2">Chinese</label>
+
+                <input name="cuisine" type="radio"
+                       id="open3" ng-model="cuisine"
+                       value="Italian">
+                <label for="open3">Italian</label>
+
+
+                <input name="cuisine" type="radio"
+                       id="open4" ng-model="cuisine"
+                       value="Thai">
+                <label for="open4">Thai</label>
+
+                <input name="cuisine" type="radio"
+                       id="open5" ng-model="cuisine"
+                       value="Indian">
+                <label for="open5">Indian</label>
 
 
 
-        <div class="center">
 
-            <a class="waves-effect waves-light btn" style="color: white" ng-click="addEvent()"><i class="material-icons right">create</i>Create
+            </div>
+            <!--<label for="invite-type">Select Cuisine</label>-->
+
+        </div>
+
+        <div class="center"style="margin-top: 60px">
+
+            <a class="waves-effect waves-light btn" style="color: white" ng-click="addEvent()"><i
+                    class="material-icons right">create</i>Create
                 Foodent!</a>
         </div>
     </div>

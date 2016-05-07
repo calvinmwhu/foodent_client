@@ -1,177 +1,50 @@
-<div style="margin: 0 auto">
-    <div class="grid" style="margin: 1%; margin-left: 4%">
+<div style="margin: 0 auto" class="container">
+    <div masonry style="margin: 1%; margin-left: 4%; margin-top: 40px">
         <div class="grid-sizer"></div>
-
-        <div class="grid-item">
-            <div class="card hoverable" style="z-index: 99">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://static.comicvine.com/uploads/original/11114/111144184/4791207-9790062099-Pizza.jpg">
-                    <span style="background: linear-gradient(transparent,black);width: 100%" class="card-title activator white-text truncate">Pizza<span class="right">3.2 mi</span> </span>
-                </div>
-                <div class="card-content activator">
-                    <p class="center-align" style="color: darkred">Ends in 30 minutes.</p><br>
-                    <div class="chip" style="background-color: cadetblue; color: white">
-                        <img src="https://static.pexels.com/photos/6413/people-eyes-playing-young.jpg" alt="Contact Person">
-                        Jane Doe
+        <div class="masonry-brick" ng-repeat="event in events">
+            <div class="grid-item" style="width: 300px; margin: 10px">
+                <div class="card hoverable" style="z-index: 99">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator"
+                             src="{{event.images[0]}}">
+                    <span style="background: linear-gradient(transparent,black);width: 100%"
+                          class="card-title activator white-text truncate">{{event.name}}<span
+                            class="right">3.2 mi</span> </span>
                     </div>
-                    <div class="chip" style="margin-top: 4px">
-                        Hot when ready
+                    <div class="card-content activator">
+                        <p class="center-align" style="color: darkred">{{event.time.start | date:'medium'}}.</p><br>
+                        <!--<div class="chip" style="background-color: cadetblue; color: white">-->
+                        <!--<img src="https://static.pexels.com/photos/6413/people-eyes-playing-young.jpg"-->
+                        <!--alt="Contact Person">-->
+                        <!--Jane Doe-->
+                        <!--</div>-->
+                        <!--<div class="chip" style="margin-top: 4px">-->
+                        <!--Hot when ready-->
+                        <!--</div>-->
+
+                        <div class="chip" style="margin-top: 4px">
+                            {{event.food.cuisine[0]}}
+                        </div>
+                        <div class="chip" style="margin-top: 4px">
+                            {{event.numGuestsAllowed}} guests capacity
+                        </div>
+
                     </div>
 
-                    <div class="chip" style="margin-top: 4px">
-                        Italian
+                    <!--<div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>-->
+                    <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4 flow-text">{{event.name}}<i
+                        class="material-icons right">close</i></span>
+                        <p><b>What</b><br>{{event.notes}}</p>
+                        <p><b>Where</b><br>{{event.formatted_address}}</p>
+
+                        <a class='btn white-text' ng-href="#/events/{{event._id}}">Go to Event Page</a>
+
                     </div>
-                    <div class="chip" style="margin-top: 4px">
-                        3 guests
-                    </div>
-
                 </div>
-
-                <!--<div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>-->
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4 flow-text">pizza<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="card hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4 truncate">Blahskghbfgkjfgkdfjg Title</span>
-
-                </div>
-                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-
-        </div>
-        <div class="grid-item">
-            <div class="card hoverable" style="z-index: 99">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
-
-                </div>
-                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="card hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
-
-                </div>
-                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-
-        </div><div class="grid-item">
-        <div class="card hoverable" style="z-index: 99">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator"
-                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title</span>
-
-            </div>
-            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
-                        class="material-icons right">close</i></span>
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
             </div>
         </div>
     </div>
-        <div class="grid-item">
-            <div class="card hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
 
-                </div>
-                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-
-        </div><div class="grid-item">
-        <div class="card hoverable" style="z-index: 99">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator"
-                     src="http://i.dailymail.co.uk/i/pix/2015/11/13/22/2E6A46F200000578-3317853-Family_fun_Ariana_shared_a_poolside_picture_with_fans_on_Instagr-a-64_1447453925843.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title</span>
-
-            </div>
-            <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4 flow-text">Card Title<i
-                        class="material-icons right">close</i></span>
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-            </div>
-        </div>
-    </div>
-        <div class="grid-item">
-            <div class="card hoverable">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
-                         src="http://ichef-1.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg">
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
-
-                </div>
-                <div class="card-action center"><p><a href="#"> EVENT PAGE</a></p></div>
-                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
-                    <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
 
 </div>
